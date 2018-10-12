@@ -26059,7 +26059,7 @@ module.exports=[
       LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
       engine = new ProviderEngine;
       window.web3 = new Web3(engine);
-      ledgerWalletSubProvider = async(LedgerWalletSubproviderFactory());
+      ledgerWalletSubProvider = LedgerWalletSubproviderFactory();
       engine.addProvider(ledgerWalletSubProvider);
       engine.addProvider(new RpcSubprovider({
         rpcUrl: `https://${network}.infura.io/v3/7a7dd3472294438eab040845d03c215c`
