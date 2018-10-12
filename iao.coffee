@@ -186,8 +186,8 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )###
 
 main = () ->
-    console.log "V2"
-    await loadWeb3(false)
+    console.log "V3"
+    await loadWeb3(true, "mainnet")
     
     amountInDAI = 100
     await registerWithETH(amountInDAI, "0x0")
