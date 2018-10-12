@@ -34,7 +34,7 @@ loadWeb3 = (useLedger, network) ->
     else
         # Use Metamask/other dApp browsers to load web3
         # Modern dapp browsers...
-        if window.ethereum?
+        if window.ethereum
             window.web3 = new Web3 ethereum
             try
                 # Request account access if needed
@@ -44,7 +44,7 @@ loadWeb3 = (useLedger, network) ->
                 # User denied account access...
 
         # Legacy dapp browsers...
-        else if window.web3?
+        else if window.web3
             window.web3 = new Web3 web3.currentProvider
             # Acccounts always exposed
         
@@ -127,16 +127,17 @@ registerWithDAI = (amountInDAI, referrer) ->
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
+    console.log "registerWithDAI: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}"
 
     # approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
+    ###await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
 
     # register
     await iaoContract.methods.registerWithDAI(
         amountInWei,
         referrer,
         { from: web3.eth.defaultAccount }
-    )
+    )###
 
 # register with ETH. amountInDAI should be in DAI (not wei).
 registerWithETH = (amountInDAI, referrer) ->
@@ -147,15 +148,15 @@ registerWithETH = (amountInDAI, referrer) ->
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
     amountInWei = amountInDAI * ethPerDAI * 1e18
-
+    console.log "registerWithETH: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}"
     # register
-    await iaoContract.methods.registerWithETH(
+    ###await iaoContract.methods.registerWithETH(
         referrer,
         {
             from: web3.eth.defaultAccount
             value: amountInWei
         }
-    )
+    )###
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
@@ -172,9 +173,10 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
+    console.log "registerWithToken: amountInDAI=#{amountInDAI}, amountInTokenUnits=#{amountInTokenUnits}, amountInToken=#{amountInTokenUnits/Math.pow(10, tokenInfo.decimals)}"
 
     # approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+    ###await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
 
     # register
     await iaoContract.methods.registerWithToken(
@@ -182,4 +184,14 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
         amountInTokenUnits,
         referrer,
         { from: web3.eth.defaultAccount }
-    )
+    )###
+
+main = () ->
+    await loadWeb3(false)
+    
+    amountInDAI = 100
+    await registerWithETH(amountInDAI, "0x0")
+    await registerWithToken("OMG", amountInDAI, "0x0")
+    await registerWithDAI(amountInDAI, "0x0")
+
+main()
