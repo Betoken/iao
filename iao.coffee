@@ -145,7 +145,7 @@ registerWithETH = (amountInDAI, referrer) ->
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
     amountInWei = amountInDAI * ethPerDAI * 1e18
-    console.log "registerWithETH: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}"
+    console.log "registerWithETH: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}, amountInETH=#{amountInWei / 1e18}"
     # register
     ###await iaoContract.methods.registerWithETH(
         referrer,
@@ -170,11 +170,9 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     tokenPerDAI = ethPerDAI / ethPerToken
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
     console.log "registerWithToken: amountInDAI=#{amountInDAI},
-        tokenInfo=#{tokenInfo},
-        ethPerToken=#{ethPerToken},
-        ethPerDAI=#{ethPerDAI},
         tokenPerDAI=#{tokenPerDAI},
-        amountInTokenUnits=#{amountInTokenUnits}"
+        amountInTokenUnits=#{amountInTokenUnits},
+        amountInToken=#{amountInDAI * tokenPerDAI}"
 
     # approve token amount
     ###await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
@@ -188,7 +186,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )###
 
 main = () ->
-    console.log "V1"
+    console.log "V2"
     await loadWeb3(false)
     
     amountInDAI = 100

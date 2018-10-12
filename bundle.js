@@ -26190,7 +26190,7 @@ module.exports=[
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
-    return console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}`);
+    return console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}, amountInETH=${amountInWei / 1e18}`);
   };
 
   // register
@@ -26214,7 +26214,7 @@ module.exports=[
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
-    return console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenInfo=${tokenInfo}, ethPerToken=${ethPerToken}, ethPerDAI=${ethPerDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}`);
+    return console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInDAI * tokenPerDAI}`);
   };
 
   // approve token amount
@@ -26229,7 +26229,7 @@ module.exports=[
   ) */
   main = async function() {
     var amountInDAI;
-    console.log("V1");
+    console.log("V2");
     await loadWeb3(false);
     amountInDAI = 100;
     await registerWithETH(amountInDAI, "0x0");
