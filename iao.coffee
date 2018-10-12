@@ -158,8 +158,8 @@ registerWithETH = (amountInDAI, referrer) ->
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
     # init
-    tokenInfo = getTokenInfo(symbol)
-    daiInfo = getTokenInfo("DAI")
+    tokenInfo = await getTokenInfo(symbol)
+    daiInfo = await getTokenInfo("DAI")
 
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)

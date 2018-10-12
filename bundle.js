@@ -26205,8 +26205,8 @@ module.exports=[
   registerWithToken = async function(symbol, amountInDAI, referrer) {
     var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
     // init
-    tokenInfo = getTokenInfo(symbol);
-    daiInfo = getTokenInfo("DAI");
+    tokenInfo = (await getTokenInfo(symbol));
+    daiInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     // calculate amount in tokens
