@@ -26219,6 +26219,8 @@ module.exports=[
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
+    console.log(tokenPerDAI);
+    console.log(Math.pow(10, tokenInfo.decimals));
     return console.log(`registerWithToken: amountInDAI=${amountInDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInTokenUnits / Math.pow(10, tokenInfo.decimals)}`);
   };
 

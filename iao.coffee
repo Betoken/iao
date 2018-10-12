@@ -173,6 +173,8 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
+    console.log tokenPerDAI
+    console.log Math.pow(10, tokenInfo.decimals)
     console.log "registerWithToken: amountInDAI=#{amountInDAI}, amountInTokenUnits=#{amountInTokenUnits}, amountInToken=#{amountInTokenUnits/Math.pow(10, tokenInfo.decimals)}"
 
     # approve token amount
