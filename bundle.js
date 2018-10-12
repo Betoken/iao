@@ -26229,6 +26229,7 @@ module.exports=[
   ) */
   main = async function() {
     var amountInDAI;
+    console.log("V1");
     await loadWeb3(false);
     amountInDAI = 100;
     await registerWithETH(amountInDAI, "0x0");

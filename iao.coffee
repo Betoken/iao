@@ -188,6 +188,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )###
 
 main = () ->
+    console.log "V1"
     await loadWeb3(false)
     
     amountInDAI = 100
