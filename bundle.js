@@ -26139,12 +26139,8 @@ module.exports=[
   };
 
   // get info of a token, given its symbol (ticker)
-  // _tokenPairs optionally allows providing custom raw info
-  getTokenInfo = async function(symbol, _tokenPairs) {
+  getTokenInfo = async function(symbol) {
     var tokenPairs;
-    if (_tokenPairs != null) {
-      return _tokenPairs[`ETH_${symbol}`];
-    }
     tokenPairs = (await getTokenPairs());
     return tokenPairs[`ETH_${symbol}`];
   };
@@ -26207,11 +26203,10 @@ module.exports=[
   )*/
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
   registerWithToken = async function(symbol, amountInDAI, referrer) {
-    var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPairs, tokenPerDAI;
+    var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
     // init
-    tokenPairs = (await getTokenPairs());
-    tokenInfo = getTokenInfo(symbol, tokenPairs);
-    daiInfo = getTokenInfo("DAI", tokenPairs);
+    tokenInfo = getTokenInfo(symbol);
+    daiInfo = getTokenInfo("DAI");
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     // calculate amount in tokens

@@ -96,10 +96,7 @@ getTokenPairs = () ->
     return tokensInformation
 
 # get info of a token, given its symbol (ticker)
-# _tokenPairs optionally allows providing custom raw info
-getTokenInfo = (symbol, _tokenPairs) ->
-    if _tokenPairs?
-        return _tokenPairs["ETH_#{symbol}"]
+getTokenInfo = (symbol) ->
     tokenPairs = await getTokenPairs()
     return tokenPairs["ETH_#{symbol}"]
 
@@ -161,9 +158,8 @@ registerWithETH = (amountInDAI, referrer) ->
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
     # init
-    tokenPairs = await getTokenPairs()
-    tokenInfo = getTokenInfo(symbol, tokenPairs)
-    daiInfo = getTokenInfo("DAI", tokenPairs)
+    tokenInfo = getTokenInfo(symbol)
+    daiInfo = getTokenInfo("DAI")
 
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
