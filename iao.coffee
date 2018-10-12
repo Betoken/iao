@@ -170,6 +170,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     tokenPerDAI = ethPerDAI / ethPerToken
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
     console.log "registerWithToken: amountInDAI=#{amountInDAI},
+        tokenInfo=#{tokenInfo},
         ethPerToken=#{ethPerToken},
         ethPerDAI=#{ethPerDAI},
         tokenPerDAI=#{tokenPerDAI},
