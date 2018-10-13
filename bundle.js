@@ -26044,7 +26044,7 @@ module.exports=[
   erc20ABI = require("./erc20_abi.json");
 
   // smart contract addresses
-  IAO_ADDRESS = "0x71C20308070d58983a7D96C73927E5145e908121";
+  IAO_ADDRESS = "0xD39fBd481f051F7E801D5A764EDcA6dD00b604FC";
 
   
   // HELPERS
@@ -26172,14 +26172,19 @@ module.exports=[
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
-    console.log(`registerWithDAI: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}`);
     // approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: (await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
+        from: web3.eth.defaultAccount
+      }))
     });
     // register
     return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
+        from: web3.eth.defaultAccount
+      }))
     }));
   };
 
@@ -26192,7 +26197,6 @@ module.exports=[
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
-    console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}, amountInETH=${amountInWei / 1e18}`);
     // register
     return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
@@ -26217,27 +26221,21 @@ module.exports=[
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
-    console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInDAI * tokenPerDAI}`);
     // approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+        from: web3.eth.defaultAccount
+      }))
     });
     // register
     return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
+        from: web3.eth.defaultAccount
+      }))
     }));
   };
-
-  $("document").ready(async function() {
-    var amountInDAI;
-    console.log("V18");
-    await loadWeb3(true, "ropsten");
-    amountInDAI = 10;
-    return (await registerWithETH(amountInDAI, "0x0000000000000000000000000000000000000000"));
-  });
-
-  //await registerWithToken("OMG", amountInDAI, "0x0")
-//await registerWithDAI(amountInDAI, "0x0")
 
 }).call(this);
 
