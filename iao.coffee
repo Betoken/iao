@@ -7,7 +7,7 @@ iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
-IAO_ADDRESS = "0x3a94aA40b6EDF0f90C9a8DDeFE8f29BadD908fb4"
+IAO_ADDRESS = "0x5050086b72baAA6A9cDDaA5D210A65711DAD6594"
 
 
 #
@@ -191,7 +191,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V11"
+    console.log "V12"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
