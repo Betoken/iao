@@ -183,7 +183,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V6"
+    console.log "V7"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
