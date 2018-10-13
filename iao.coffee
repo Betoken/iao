@@ -157,7 +157,7 @@ registerWithETH = (amountInDAI, referrer) ->
             })
             value: amountInWei
         }
-    )
+    ).on("transactionHash", console.log).on("receipt", console.log)
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
@@ -191,7 +191,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V10"
+    console.log "V11"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10

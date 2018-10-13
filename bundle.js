@@ -26201,7 +26201,7 @@ module.exports=[
         value: amountInWei
       })),
       value: amountInWei
-    }));
+    }).on("transactionHash", console.log).on("receipt", console.log));
   };
 
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
@@ -26230,7 +26230,7 @@ module.exports=[
 
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V10");
+    console.log("V11");
     await loadWeb3(true, "ropsten");
     amountInDAI = 10;
     return (await registerWithETH(amountInDAI, "0x674647242239941b2d35368e66a4edc39b161da9"));
