@@ -26044,7 +26044,7 @@ module.exports=[
   erc20ABI = require("./erc20_abi.json");
 
   // smart contract addresses
-  IAO_ADDRESS = "0x882447f652c0807f8d5e55f803a32abc373616c9";
+  IAO_ADDRESS = "0x71C20308070d58983a7D96C73927E5145e908121";
 
   
   // HELPERS
@@ -26230,7 +26230,7 @@ module.exports=[
 
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V16");
+    console.log("V18");
     await loadWeb3(true, "ropsten");
     amountInDAI = 10;
     return (await registerWithETH(amountInDAI, "0x0000000000000000000000000000000000000000"));
