@@ -7,7 +7,7 @@ iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
-IAO_ADDRESS = "0x3a94aA40b6EDF0f90C9a8DDeFE8f29BadD908fb4"
+IAO_ADDRESS = "0x882447f652c0807f8d5e55f803a32abc373616c9"
 
 
 #
@@ -58,7 +58,7 @@ loadWeb3 = (useLedger, network) ->
             console.log "Non-Ethereum browser detected. You should consider trying MetaMask!"
     
     # set default account
-    web3.eth.defaultAccount = (await web3.eth.getAccounts())[1]
+    web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
 
 # returns the IAO contract object
 IAOContract = () ->
@@ -151,7 +151,10 @@ registerWithETH = (amountInDAI, referrer) ->
     await iaoContract.methods.registerWithETH(referrer).send(
         {
             from: web3.eth.defaultAccount
-            gas: 1000000
+            gas: await iaoContract.methods.registerWithETH(referrer).estimateGas({
+                from: web3.eth.defaultAccount
+                value: amountInWei
+            })
             value: amountInWei
         }
     ).on("transactionHash", console.log).on("receipt", console.log)
@@ -188,7 +191,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V15"
+    console.log "V16"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
