@@ -26059,7 +26059,7 @@ module.exports=[
       LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
       engine = new ProviderEngine;
       window.web3 = new Web3(engine);
-      ledgerWalletSubProvider = LedgerWalletSubproviderFactory();
+      ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory());
       console.log(ledgerWalletSubProvider);
       engine.addProvider(ledgerWalletSubProvider);
       engine.addProvider(new RpcSubprovider({
@@ -26230,7 +26230,7 @@ module.exports=[
   ) */
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V4");
+    console.log("V5");
     await loadWeb3(true, "mainnet");
     amountInDAI = 100;
     await registerWithETH(amountInDAI, "0x0");

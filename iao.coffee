@@ -25,7 +25,7 @@ loadWeb3 = (useLedger, network) ->
         engine = new ProviderEngine
         window.web3 = new Web3 engine
 
-        ledgerWalletSubProvider = LedgerWalletSubproviderFactory()
+        ledgerWalletSubProvider = await LedgerWalletSubproviderFactory()
         console.log ledgerWalletSubProvider
         engine.addProvider ledgerWalletSubProvider
         engine.addProvider new RpcSubprovider {
@@ -187,7 +187,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )###
 
 $("document").ready(() ->
-    console.log "V4"
+    console.log "V5"
     await loadWeb3(true, "mainnet")
     
     amountInDAI = 100
