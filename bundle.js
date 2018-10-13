@@ -26044,7 +26044,7 @@ module.exports=[
   erc20ABI = require("./erc20_abi.json");
 
   // smart contract addresses
-  IAO_ADDRESS = "0x31a73353afade703d622327fc28242f9db37a5ad";
+  IAO_ADDRESS = "0x3a94aA40b6EDF0f90C9a8DDeFE8f29BadD908fb4";
 
   
   // HELPERS
@@ -26095,7 +26095,7 @@ module.exports=[
     }
     
     // set default account
-    return web3.eth.defaultAccount = ((await web3.eth.getAccounts()))[0];
+    return web3.eth.defaultAccount = ((await web3.eth.getAccounts()))[1];
   };
 
   // returns the IAO contract object
@@ -26196,10 +26196,7 @@ module.exports=[
     // register
     return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
-      gas: (await iaoContract.methods.registerWithETH(referrer).estimateGas({
-        from: web3.eth.defaultAccount,
-        value: amountInWei
-      })),
+      gas: 1000000,
       value: amountInWei
     }).on("transactionHash", console.log).on("receipt", console.log));
   };
@@ -26230,7 +26227,7 @@ module.exports=[
 
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V14");
+    console.log("V15");
     await loadWeb3(true, "ropsten");
     amountInDAI = 10;
     return (await registerWithETH(amountInDAI, "0x0000000000000000000000000000000000000000"));
