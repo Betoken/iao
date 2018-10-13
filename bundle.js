@@ -26044,7 +26044,7 @@ module.exports=[
   erc20ABI = require("./erc20_abi.json");
 
   // smart contract addresses
-  IAO_ADDRESS = "0xD39fBd481f051F7E801D5A764EDcA6dD00b604FC";
+  IAO_ADDRESS = "0x3a94aA40b6EDF0f90C9a8DDeFE8f29BadD908fb4";
 
   
   // HELPERS
@@ -26060,7 +26060,6 @@ module.exports=[
       engine = new ProviderEngine;
       window.web3 = new Web3(engine);
       ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory());
-      console.log(ledgerWalletSubProvider);
       engine.addProvider(ledgerWalletSubProvider);
       engine.addProvider(new RpcSubprovider({
         rpcUrl: `https://${network}.infura.io/v3/7a7dd3472294438eab040845d03c215c`
@@ -26170,18 +26169,15 @@ module.exports=[
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
-    return console.log(`registerWithDAI: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}`);
+    console.log(`registerWithDAI: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}`);
+    // approve token amount
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei);
+    // register
+    return (await iaoContract.methods.registerWithDAI(amountInWei, referrer, {
+      from: web3.eth.defaultAccount
+    }));
   };
 
-  // approve token amount
-  /*await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
-
-   * register
-  await iaoContract.methods.registerWithDAI(
-      amountInWei,
-      referrer,
-      { from: web3.eth.defaultAccount }
-  ) */
   // register with ETH. amountInDAI should be in DAI (not wei).
   registerWithETH = async function(amountInDAI, referrer) {
     var amountInWei, ethPerDAI, iaoContract, tokenInfo;
@@ -26191,17 +26187,14 @@ module.exports=[
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
-    return console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}, amountInETH=${amountInWei / 1e18}`);
+    console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}, amountInETH=${amountInWei / 1e18}`);
+    // register
+    return (await iaoContract.methods.registerWithETH(referrer, {
+      from: web3.eth.defaultAccount,
+      value: amountInWei
+    }));
   };
 
-  // register
-  /*await iaoContract.methods.registerWithETH(
-      referrer,
-      {
-          from: web3.eth.defaultAccount
-          value: amountInWei
-      }
-  )*/
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
   registerWithToken = async function(symbol, amountInDAI, referrer) {
     var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
@@ -26215,28 +26208,25 @@ module.exports=[
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
-    return console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInDAI * tokenPerDAI}`);
+    console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInDAI * tokenPerDAI}`);
+    // approve token amount
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits);
+    // register
+    return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer, {
+      from: web3.eth.defaultAccount
+    }));
   };
 
-  // approve token amount
-  /*await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
-
-   * register
-  await iaoContract.methods.registerWithToken(
-      tokenInfo.contractAddress,
-      amountInTokenUnits,
-      referrer,
-      { from: web3.eth.defaultAccount }
-  ) */
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V5");
-    await loadWeb3(true, "mainnet");
-    amountInDAI = 100;
-    await registerWithETH(amountInDAI, "0x0");
-    await registerWithToken("OMG", amountInDAI, "0x0");
-    return (await registerWithDAI(amountInDAI, "0x0"));
+    console.log("V6");
+    await loadWeb3(true, "ropsten");
+    amountInDAI = 10;
+    return (await registerWithETH(amountInDAI, "0x0"));
   });
+
+  //await registerWithToken("OMG", amountInDAI, "0x0")
+//await registerWithDAI(amountInDAI, "0x0")
 
 }).call(this);
 

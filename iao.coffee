@@ -7,7 +7,7 @@ iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
-IAO_ADDRESS = "0xD39fBd481f051F7E801D5A764EDcA6dD00b604FC"
+IAO_ADDRESS = "0x3a94aA40b6EDF0f90C9a8DDeFE8f29BadD908fb4"
 
 
 #
@@ -26,7 +26,6 @@ loadWeb3 = (useLedger, network) ->
         window.web3 = new Web3 engine
 
         ledgerWalletSubProvider = await LedgerWalletSubproviderFactory()
-        console.log ledgerWalletSubProvider
         engine.addProvider ledgerWalletSubProvider
         engine.addProvider new RpcSubprovider {
             rpcUrl: "https://#{network}.infura.io/v3/7a7dd3472294438eab040845d03c215c"
@@ -128,14 +127,14 @@ registerWithDAI = (amountInDAI, referrer) ->
     console.log "registerWithDAI: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}"
 
     # approve token amount
-    ###await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
 
     # register
     await iaoContract.methods.registerWithDAI(
         amountInWei,
         referrer,
         { from: web3.eth.defaultAccount }
-    )###
+    )
 
 # register with ETH. amountInDAI should be in DAI (not wei).
 registerWithETH = (amountInDAI, referrer) ->
@@ -148,13 +147,13 @@ registerWithETH = (amountInDAI, referrer) ->
     amountInWei = amountInDAI * ethPerDAI * 1e18
     console.log "registerWithETH: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}, amountInETH=#{amountInWei / 1e18}"
     # register
-    ###await iaoContract.methods.registerWithETH(
+    await iaoContract.methods.registerWithETH(
         referrer,
         {
             from: web3.eth.defaultAccount
             value: amountInWei
         }
-    )###
+    )
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
@@ -176,7 +175,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
         amountInToken=#{amountInDAI * tokenPerDAI}"
 
     # approve token amount
-    ###await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
 
     # register
     await iaoContract.methods.registerWithToken(
@@ -184,14 +183,14 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
         amountInTokenUnits,
         referrer,
         { from: web3.eth.defaultAccount }
-    )###
+    )
 
 $("document").ready(() ->
-    console.log "V5"
-    await loadWeb3(true, "mainnet")
+    console.log "V6"
+    await loadWeb3(true, "ropsten")
     
-    amountInDAI = 100
+    amountInDAI = 10
     await registerWithETH(amountInDAI, "0x0")
-    await registerWithToken("OMG", amountInDAI, "0x0")
-    await registerWithDAI(amountInDAI, "0x0")
+    #await registerWithToken("OMG", amountInDAI, "0x0")
+    #await registerWithDAI(amountInDAI, "0x0")
 )
