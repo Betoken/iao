@@ -144,7 +144,8 @@ registerWithDAI = (amountInDAI, referrer) ->
             gas: await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
                 from: web3.eth.defaultAccount
             })
-        })
+        }
+    )
 
 # register with ETH. amountInDAI should be in DAI (not wei).
 registerWithETH = (amountInDAI, referrer) ->
@@ -166,7 +167,7 @@ registerWithETH = (amountInDAI, referrer) ->
             })
             value: amountInWei
         }
-    ).on("transactionHash", console.log).on("receipt", console.log)
+    )
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer) ->
@@ -185,12 +186,14 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
 
     # approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
-        .send({
-            from: web3.eth.defaultAccount
-            gas: await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+        .send(
+            {
                 from: web3.eth.defaultAccount
-            })
-        })
+                gas: await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+                    from: web3.eth.defaultAccount
+                })
+            }
+    )
 
     # register
     await iaoContract.methods.registerWithToken(

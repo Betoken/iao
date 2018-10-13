@@ -26205,7 +26205,7 @@ module.exports=[
         value: amountInWei
       })),
       value: amountInWei
-    }).on("transactionHash", console.log).on("receipt", console.log));
+    }));
   };
 
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
