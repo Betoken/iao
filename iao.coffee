@@ -183,11 +183,11 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V7"
+    console.log "V8"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
-    await registerWithETH(amountInDAI, "0x0")
+    await registerWithETH(amountInDAI, "0x674647242239941b2d35368e66a4edc39b161da9")
     #await registerWithToken("OMG", amountInDAI, "0x0")
     #await registerWithDAI(amountInDAI, "0x0")
 )
