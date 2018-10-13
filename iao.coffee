@@ -185,7 +185,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
         { from: web3.eth.defaultAccount }
     )###
 
-main = () ->
+$("document").ready(() ->
     console.log "V3"
     await loadWeb3(true, "mainnet")
     
@@ -193,5 +193,4 @@ main = () ->
     await registerWithETH(amountInDAI, "0x0")
     await registerWithToken("OMG", amountInDAI, "0x0")
     await registerWithDAI(amountInDAI, "0x0")
-
-main()
+)
