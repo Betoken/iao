@@ -26196,6 +26196,10 @@ module.exports=[
     // register
     return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
+      gas: (await iaoContract.methods.registerWithETH(referrer).estimateGas({
+        from: web3.eth.defaultAccount,
+        value: amountInWei
+      })),
       value: amountInWei
     }));
   };
@@ -26226,7 +26230,7 @@ module.exports=[
 
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V9");
+    console.log("V10");
     await loadWeb3(true, "ropsten");
     amountInDAI = 10;
     return (await registerWithETH(amountInDAI, "0x674647242239941b2d35368e66a4edc39b161da9"));

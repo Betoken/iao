@@ -151,6 +151,10 @@ registerWithETH = (amountInDAI, referrer) ->
     await iaoContract.methods.registerWithETH(referrer).send(
         {
             from: web3.eth.defaultAccount
+            gas: await iaoContract.methods.registerWithETH(referrer).estimateGas({
+                from: web3.eth.defaultAccount
+                value: amountInWei
+            })
             value: amountInWei
         }
     )
@@ -187,7 +191,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V9"
+    console.log "V10"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
