@@ -187,7 +187,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )###
 
 $("document").ready(() ->
-    console.log "V3"
+    console.log "V4"
     await loadWeb3(true, "mainnet")
     
     amountInDAI = 100

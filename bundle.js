@@ -26230,7 +26230,7 @@ module.exports=[
   ) */
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V3");
+    console.log("V4");
     await loadWeb3(true, "mainnet");
     amountInDAI = 100;
     await registerWithETH(amountInDAI, "0x0");
