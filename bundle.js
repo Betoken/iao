@@ -26171,9 +26171,11 @@ module.exports=[
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     console.log(`registerWithDAI: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}`);
     // approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei);
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
+      from: web3.eth.defaultAccount
+    });
     // register
-    return (await iaoContract.methods.registerWithDAI(amountInWei, referrer, {
+    return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
       from: web3.eth.defaultAccount
     }));
   };
@@ -26189,7 +26191,7 @@ module.exports=[
     amountInWei = amountInDAI * ethPerDAI * 1e18;
     console.log(`registerWithETH: amountInDAI=${amountInDAI}, amountInWei=${amountInWei}, amountInETH=${amountInWei / 1e18}`);
     // register
-    return (await iaoContract.methods.registerWithETH(referrer, {
+    return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
       value: amountInWei
     }));
@@ -26210,9 +26212,11 @@ module.exports=[
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
     console.log(`registerWithToken: amountInDAI=${amountInDAI}, tokenPerDAI=${tokenPerDAI}, amountInTokenUnits=${amountInTokenUnits}, amountInToken=${amountInDAI * tokenPerDAI}`);
     // approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits);
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
+      from: web3.eth.defaultAccount
+    });
     // register
-    return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer, {
+    return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
       from: web3.eth.defaultAccount
     }));
   };

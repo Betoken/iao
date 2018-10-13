@@ -127,14 +127,11 @@ registerWithDAI = (amountInDAI, referrer) ->
     console.log "registerWithDAI: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}"
 
     # approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei)
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({ from: web3.eth.defaultAccount })
 
     # register
     await iaoContract.methods.registerWithDAI(
-        amountInWei,
-        referrer,
-        { from: web3.eth.defaultAccount }
-    )
+        amountInWei, referrer).send({ from: web3.eth.defaultAccount })
 
 # register with ETH. amountInDAI should be in DAI (not wei).
 registerWithETH = (amountInDAI, referrer) ->
@@ -147,8 +144,7 @@ registerWithETH = (amountInDAI, referrer) ->
     amountInWei = amountInDAI * ethPerDAI * 1e18
     console.log "registerWithETH: amountInDAI=#{amountInDAI}, amountInWei=#{amountInWei}, amountInETH=#{amountInWei / 1e18}"
     # register
-    await iaoContract.methods.registerWithETH(
-        referrer,
+    await iaoContract.methods.registerWithETH(referrer).send(
         {
             from: web3.eth.defaultAccount
             value: amountInWei
@@ -176,12 +172,13 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
 
     # approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+        .send({ from: web3.eth.defaultAccount })
 
     # register
     await iaoContract.methods.registerWithToken(
         tokenInfo.contractAddress,
         amountInTokenUnits,
-        referrer,
+        referrer).send(
         { from: web3.eth.defaultAccount }
     )
 
