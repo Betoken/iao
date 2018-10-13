@@ -26051,7 +26051,7 @@ module.exports=[
 
   // loads web3 as a global variable
   loadWeb3 = async function(useLedger, network) {
-    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, engine, error, ledgerWalletSubProvider;
+    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, engine, error, ledgerWalletSubProvider, networkId;
     if (useLedger) {
       // Use ledger-wallet-provider to load web3
       ProviderEngine = require("web3-provider-engine");
@@ -26059,7 +26059,10 @@ module.exports=[
       LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
       engine = new ProviderEngine;
       window.web3 = new Web3(engine);
-      ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory());
+      networkId = network === "mainnet" ? 1 : 3;
+      ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
+        return networkId;
+      }, "44'/60'/0'/0"));
       engine.addProvider(ledgerWalletSubProvider);
       engine.addProvider(new RpcSubprovider({
         rpcUrl: `https://${network}.infura.io/v3/7a7dd3472294438eab040845d03c215c`
@@ -26223,7 +26226,7 @@ module.exports=[
 
   $("document").ready(async function() {
     var amountInDAI;
-    console.log("V8");
+    console.log("V9");
     await loadWeb3(true, "ropsten");
     amountInDAI = 10;
     return (await registerWithETH(amountInDAI, "0x674647242239941b2d35368e66a4edc39b161da9"));

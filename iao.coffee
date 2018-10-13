@@ -25,7 +25,11 @@ loadWeb3 = (useLedger, network) ->
         engine = new ProviderEngine
         window.web3 = new Web3 engine
 
-        ledgerWalletSubProvider = await LedgerWalletSubproviderFactory()
+        networkId = if network == "mainnet" then 1 else 3
+        ledgerWalletSubProvider = await LedgerWalletSubproviderFactory(
+            () -> networkId,
+            "44'/60'/0'/0"
+        )
         engine.addProvider ledgerWalletSubProvider
         engine.addProvider new RpcSubprovider {
             rpcUrl: "https://#{network}.infura.io/v3/7a7dd3472294438eab040845d03c215c"
@@ -183,7 +187,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     )
 
 $("document").ready(() ->
-    console.log "V8"
+    console.log "V9"
     await loadWeb3(true, "ropsten")
     
     amountInDAI = 10
