@@ -4,3 +4,6 @@
 .ui.menu{
   min-height: 64px;
 }
+.ui.menu .item>a.telegram{
+  color: #0088cc;
+}

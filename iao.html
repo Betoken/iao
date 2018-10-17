@@ -48,19 +48,23 @@
 <body>
     <div class="bg-pattern-lines">
         <!-- Page Contents -->
-        <div class="widescreen large screen computer only ui equal width centered column grid container header-menu">
+        <div class="widescreen large screen computer only ui equal width centered column grid container">
             <div class="ui fluid text menu">
                 <div class="item"><img class="ui image logo" src="semantic/dist/themes/default/assets/images/logo-1.svg" alt="Betoken logo"></div>
                 <div class="ui right item">
                     <div class="item">Need help?</div>
-                    <a class="item" href="https://t.me/betokenfund" target="_blank" style="color: #1e96c8;">Contact us on Telegram <i class="telegram icon"></i></a>
+                    <a class="item telegram" href="https://t.me/betokenfund" target="_blank">Contact us on Telegram <i class="telegram icon"></i></a>
                 </div>
             </div>
         </div>
+        <div class="mobile tablet only ui equal width centered column grid container">
+          <img class="ui image" src="semantic/dist/themes/default/assets/images/logo-1.svg" width="192" alt="Betoken logo"></div>
+        </div>
+
         <!-- CTA hero -->
         <div class="ui hidden divider"></div>
         <div class="ui hidden divider"></div>
-        <div class="two column stackable ui grid container">
+        <div class="two column stackable very relaxed ui grid container">
             <div class="column">
                 <h1>Initial Account Offering</h1> <br>
                 <b>Please read the following important info before purchasing:</b>
@@ -148,7 +152,7 @@
                         </div>
                         <div class="field">
                           <label>Send 0.1000 ETH directly to that ENS address</label>
-                          <input type="text" name="" placeholder="betoken.fund.eth">
+                          <input type="text" name="" placeholder="betoken.fund.eth" value="betoken.fund.eth">
                         </div>
                     </div>
                 </div>
@@ -157,9 +161,9 @@
         <div class="ui hidden divider"></div>
     </div>
     <!-- CTA footer -->
-    <div class="ui center aligned text container">
-        <img id="powered-by-kn" src="semantic/dist/themes/default/assets/images/powered-by-kn.png" width="143" alt="kyber Network logo"/>
-        <div class="ui text fluid three item menu">
+    <div class="ui container">
+        <div class="ui text fluid four stackable item menu">
+            <a class="item telegram" href="https://t.me/betokenfund" target="_blank">Telegram <i class="telegram icon"></i></a>
             <a class="item" href="mailto:hello@betoken.fund">hello@betoken.fund</a>
             <a class="item" href="">Whitepaper</a>
             <a class="item" href="">Incentivized Meritocracy</a>

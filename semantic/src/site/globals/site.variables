@@ -95,3 +95,14 @@
 --------------------*/
 
 @borderColor               : #D1DCDF;
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Positive */
+@positiveColor           : @green;
+@positiveBackgroundColor : @lightGreen;
+@positiveBorderColor     : #D1DCDF;
+@positiveHeaderColor     : #green;
+@positiveTextColor       : #green;

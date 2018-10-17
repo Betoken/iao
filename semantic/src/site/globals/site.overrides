@@ -19,3 +19,13 @@
   background-position-y: 48px;
   background-repeat: no-repeat;
 }
+
+.telegram{
+  color: #0088cc;
+}
+
+@media only screen and (max-width: 600px) {
+  .bg-pattern-lines {
+    background-image: none;
+  }
+}

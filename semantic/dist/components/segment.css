@@ -877,3 +877,6 @@
          Site Overrides
 *******************************/
 
+.ui.segment {
+  padding: 24px;
+}
