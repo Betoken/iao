@@ -402,8 +402,8 @@
   opacity: 1;
   z-index: 2;
   border: none;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
   width: 1.5rem;
   height: 1.5rem;
   top: -0.25rem;
@@ -511,8 +511,8 @@
   opacity: 1;
   z-index: 2;
   border: none;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
   width: 1.5rem;
   height: 1.5rem;
   top: 0rem;
@@ -524,8 +524,8 @@
 .ui.toggle.checkbox input ~ .box:after,
 .ui.toggle.checkbox input ~ label:after {
   left: -0.05rem;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
 }
 
 /* Focus */
@@ -549,13 +549,13 @@
 }
 .ui.toggle.checkbox input:checked ~ .box:before,
 .ui.toggle.checkbox input:checked ~ label:before {
-  background-color: #2185D0 !important;
+  background-color: #002B49 !important;
 }
 .ui.toggle.checkbox input:checked ~ .box:after,
 .ui.toggle.checkbox input:checked ~ label:after {
   left: 2.15rem;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15) inset;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF inset;
 }
 
 /* Active Focus */
@@ -565,7 +565,7 @@
 }
 .ui.toggle.checkbox input:focus:checked ~ .box:before,
 .ui.toggle.checkbox input:focus:checked ~ label:before {
-  background-color: #0d71bb !important;
+  background-color: #001320 !important;
 }
 
 

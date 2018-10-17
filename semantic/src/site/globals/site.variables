@@ -4,7 +4,7 @@
 
 /*-------------------
       Base Sizes
---------------------*/ 
+--------------------*/
 
 /* This is the single variable that controls them all */
 @emSize   : 16px;
@@ -67,6 +67,21 @@
 @green            : #18DAA3;
 @grey             : #8FA9B0;
 @black            : rgba(0, 0, 0, 0.87);
+@blue             : #002B49;
+
+
+/*---  Light Colors  ---*/
+@lightGreen       : #D2FFF2;
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+@primaryColor        : @blue;
+@secondaryColor      : @green;
+
+@lightPrimaryColor   : @lightBlue;
+@lightSecondaryColor : @lightBlack;
 
 
 /*-------------------
@@ -74,3 +89,9 @@
 --------------------*/
 
 @linkColor           : @green;
+
+/*-------------------
+      Borders
+--------------------*/
+
+@borderColor               : #D1DCDF;

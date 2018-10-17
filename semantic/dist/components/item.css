@@ -418,7 +418,7 @@
 --------------------*/
 
 .ui.divided.items > .item {
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
   margin: 0em;
   padding: 1em 0em;
 }

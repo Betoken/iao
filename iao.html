@@ -5,7 +5,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-    
+
     <!-- Site Properties -->
     <title>IAO - Betoken</title>
     <meta name="description" content="">
@@ -17,7 +17,7 @@
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
-        
+
         gtag('config', 'UA-116797881-1');
     </script>
     <script
@@ -25,7 +25,6 @@
     integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
     crossorigin="anonymous"></script>
     <script src="semantic/dist/semantic.min.js"></script>
-    <script src="semantic/dist/components/dropdown.min.js"></script>
     <script src="bundle.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="semantic/dist/themes/default/assets/images/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="semantic/dist/themes/default/assets/images/icons/favicon-32x32.png">
@@ -79,7 +78,7 @@
                         <i class="circle green icon"></i>
                         <div class="content">
                             <div class="description">
-                                During the IAO, accounts are sold at a discount. 
+                                During the IAO, accounts are sold at a discount.
                                 You will still be able to purchase accounts after the IAO is over and Betoken is launched on the Ethereum Mainnet, but it will be 25% more expensive.
                             </div>
                         </div>
@@ -121,34 +120,36 @@
                 <div class="ui segment">
                     <div class="ui fluid form success">
                         <div class="field">
-                            <p><strong>1.</strong> Choose the amount of Kairo (KRO) you want (Prices are in USD):</p>
-                            <button class="ui toggle button">$10 • 5 KRO</button><button class="ui toggle button active">$50 • 25 KRO</button><button class="ui toggle button">$100 • 50 KRO</button>
+                            <label>1. Choose the amount of Kairo (KRO) you want (Prices are in USD):</label>
+                            <button class="ui basic button">$10 • 5 KRO</button><button class="ui greenlight button">$50 • 25 KRO</button><button class="ui basic button">$100 • 50 KRO</button>
                         </div>
                         <div class="ui success message">
                             <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
                         </div>
                         <div class="field">
-                            <p><strong>2.</strong> Choose your payment method:</p>
-                            <select>
-                                <option value="">Ether</option>
-                                <option value="1">DAI</option>
-                                <option value="0">BAT</option>
-                            </select>
+                          <label>2. Choose your payment method:</label>
+                          <select>
+                            <option value="">Ether</option>
+                            <option value="1">DAI</option>
+                            <option value="0">BAT</option>
+                          </select>
                         </div>
                         <div class="inline field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" class="hidden">
-                                <label>By purchasing an account, you agree to our <a href="" target="_blank">Terms and conditions</a>.</label>
-                            </div>
+                          <div class="ui checkbox">
+                            <input type="checkbox" tabindex="0" class="hidden">
+                            <label>By purchasing an account, you agree to our <a href="" target="_blank">Terms and conditions</a>.</label>
+                          </div>
                         </div>
-
-                        <button class="fluid ui green toggle button">Continue with Metamask</button>
-                        <br>
-
-                        <button class="fluid ui green toggle button">Continue with Ledger</button>
-                        <br>
-
-                        <button class="fluid ui green toggle button">Continue with direct Ether transfer</button>
+                        <div class="ui hidden divider"></div>
+                        <button class="ui primary button"><img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">Continue with Metamask</button>
+                        <button class="ui basic button"><img src="semantic/dist/themes/default/assets/images/icons/ledger.png" width="24" alt="Metamask logo">Continue with Ledger</button>
+                        <div class="ui horizontal divider">
+                          Or
+                        </div>
+                        <div class="field">
+                          <label>Send 0.1000 ETH directly to that ENS address</label>
+                          <input type="text" name="" placeholder="betoken.fund.eth">
+                        </div>
                     </div>
                 </div>
             </div>

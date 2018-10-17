@@ -1,3 +1,16 @@
 /*******************************
          Site Overrides
 *******************************/
+.ui.button{
+  font-size: 14px;
+  min-height: 48px;
+}
+.ui.button img{
+  float: left;
+  margin-right: 8px;
+}
+
+.greenlight.button{
+  background-color: @lightGreen;
+  border: 1px solid #A2F5DD;
+}

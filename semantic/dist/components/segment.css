@@ -16,12 +16,12 @@
 .ui.segment {
   position: relative;
   background: #FFFFFF;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF;
+          box-shadow: 0px 1px 2px 0 #D1DCDF;
   margin: 1rem 0em;
   padding: 1em 1em;
   border-radius: 0.5rem;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
 }
 .ui.segment:first-child {
   margin-top: 0em;
@@ -40,7 +40,7 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   border: none;
-  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  border-bottom: 1px solid #D1DCDF;
 }
 .ui.vertical.segment:last-child {
   border-bottom: none;
@@ -89,9 +89,9 @@
 /* Table */
 .ui.basic.table.segment {
   background: #FFFFFF;
-  border: 1px solid rgba(34, 36, 38, 0.15);
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF;
+          box-shadow: 0px 1px 2px 0 #D1DCDF;
 }
 .ui[class*="very basic"].table.segment {
   padding: 1em 1em;
@@ -128,7 +128,7 @@
   padding: 1em 1em;
   min-height: 18rem;
   background: #F9FAFB;
-  border-color: rgba(34, 36, 38, 0.15);
+  border-color: #D1DCDF;
   -webkit-box-shadow: 0px 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
           box-shadow: 0px 2px 25px 0 rgba(34, 36, 38, 0.05) inset;
 }
@@ -194,7 +194,7 @@
   left: 0px;
   position: absolute;
   width: 100%;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
   -webkit-box-shadow: '';
           box-shadow: '';
 }
@@ -244,7 +244,7 @@
   position: absolute;
   bottom: -3px;
   left: 0%;
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
   background: rgba(0, 0, 0, 0.03);
   width: 100%;
   height: 6px;
@@ -347,9 +347,9 @@
           flex-direction: column;
   position: relative;
   margin: 1rem 0em;
-  border: 1px solid rgba(34, 36, 38, 0.15);
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF;
+          box-shadow: 0px 1px 2px 0 #D1DCDF;
   border-radius: 0.5rem;
 }
 .ui.segments:first-child {
@@ -369,7 +369,7 @@
   -webkit-box-shadow: none;
           box-shadow: none;
   border: none;
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
 }
 .ui.segments:not(.horizontal) > .segment:first-child {
   border-top: none;
@@ -386,8 +386,8 @@
   bottom: 0px;
   margin-top: 0em;
   margin-bottom: 0em;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), none;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), none;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, none;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, none;
   border-radius: 0em 0em 0.5rem 0.5rem;
 }
 
@@ -398,7 +398,7 @@
 
 /* Nested Group */
 .ui.segments > .ui.segments {
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
   margin: 1rem 1rem;
 }
 .ui.segments > .segments:first-child {
@@ -421,11 +421,11 @@
   border-radius: 0px;
   padding: 0em;
   background-color: #FFFFFF;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF;
+          box-shadow: 0px 1px 2px 0 #D1DCDF;
   margin: 1rem 0em;
   border-radius: 0.5rem;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
 }
 
 /* Nested Horizontal Group */
@@ -436,7 +436,7 @@
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
 }
 
 /* Horizontal Segment */
@@ -453,7 +453,7 @@
   border: none;
   -webkit-box-shadow: none;
           box-shadow: none;
-  border-left: 1px solid rgba(34, 36, 38, 0.15);
+  border-left: 1px solid #D1DCDF;
 }
 
 /* Border Fixes */
@@ -636,10 +636,10 @@
 
 /* Blue */
 .ui.blue.segment:not(.inverted) {
-  border-top: 2px solid #2185D0 !important;
+  border-top: 2px solid #002B49 !important;
 }
 .ui.inverted.blue.segment {
-  background-color: #2185D0 !important;
+  background-color: #002B49 !important;
   color: #FFFFFF !important;
 }
 
@@ -821,8 +821,8 @@
   margin-top: 0em;
   top: 0px;
   margin-bottom: 1rem;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), none;
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), none;
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, none;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, none;
   border-radius: 0em 0em 0.5rem 0.5rem;
 }
 .ui.segment[class*="bottom attached"]:last-child {

@@ -40,7 +40,7 @@
   font-family: 'Lato', 'Helvetica Neue', Arial, Helvetica, sans-serif;
   padding: 0.375em 0.75em;
   background: #FFFFFF;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
   color: rgba(0, 0, 0, 0.87);
   border-radius: 0.5rem;
   -webkit-transition: border-color 0.1s ease, -webkit-box-shadow 0.1s ease;

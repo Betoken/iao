@@ -215,6 +215,7 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   width: 100%;
   top: 0px;
   background-image: url('themes/default/assets/images/bg-pattern-lines.svg');
-  background-position: top right;
+  background-position: right;
+  background-position-y: 48px;
   background-repeat: no-repeat;
 }

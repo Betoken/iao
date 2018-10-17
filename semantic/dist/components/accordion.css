@@ -127,8 +127,8 @@
 .ui.styled.accordion .accordion {
   border-radius: 0.5rem;
   background: #FFFFFF;
-  -webkit-box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15);
-          box-shadow: 0px 1px 2px 0 rgba(34, 36, 38, 0.15), 0px 0px 0px 1px rgba(34, 36, 38, 0.15);
+  -webkit-box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF;
+          box-shadow: 0px 1px 2px 0 #D1DCDF, 0px 0px 0px 1px #D1DCDF;
 }
 .ui.styled.accordion .title,
 .ui.styled.accordion .accordion .title {
@@ -136,7 +136,7 @@
   padding: 0.75em 1em;
   color: rgba(0, 0, 0, 0.4);
   font-weight: bold;
-  border-top: 1px solid rgba(34, 36, 38, 0.15);
+  border-top: 1px solid #D1DCDF;
   -webkit-transition: background 0.1s ease, color 0.1s ease;
   transition: background 0.1s ease, color 0.1s ease;
 }

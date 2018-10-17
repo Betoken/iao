@@ -30,7 +30,7 @@
           box-shadow: none;
   line-height: 1.125em;
   border-radius: 0.5rem;
-  border: 1px solid rgba(34, 36, 38, 0.15);
+  border: 1px solid #D1DCDF;
 }
 
 /* First Steps */
@@ -77,7 +77,7 @@
           box-shadow: none;
   border-radius: 0em;
   border: none;
-  border-right: 1px solid rgba(34, 36, 38, 0.15);
+  border-right: 1px solid #D1DCDF;
   -webkit-transition: background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, box-shadow 0.1s ease;
@@ -97,7 +97,7 @@
   width: 1.125em;
   height: 1.125em;
   border-style: solid;
-  border-color: rgba(34, 36, 38, 0.15);
+  border-color: #D1DCDF;
   border-width: 0px 1px 1px 0px;
   -webkit-transition: background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, -webkit-box-shadow 0.1s ease;
   transition: background-color 0.1s ease, opacity 0.1s ease, color 0.1s ease, -webkit-box-shadow 0.1s ease;
@@ -241,7 +241,7 @@
   border-radius: 0em;
   padding: 1.125em 2em;
   border-right: none;
-  border-bottom: 1px solid rgba(34, 36, 38, 0.15);
+  border-bottom: 1px solid #D1DCDF;
 }
 .ui.vertical.steps .step:first-child {
   padding: 1.125em 2em;
