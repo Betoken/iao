@@ -77,6 +77,13 @@
                     <div class="item">
                         <i class="circle green icon"></i>
                         <div class="content">
+                            <div class="description">The more Kairo you own, the more money you will manage, the more commission you will receive. You will be able to earn Kairo by making profitable investments for the Betoken fund.</div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
                             <div class="description">
                                 During the IAO, accounts are sold at a discount.
                                 You will still be able to purchase accounts after the IAO is over and Betoken is launched on the Ethereum Mainnet, but it will be 25% more expensive.
@@ -87,14 +94,7 @@
                     <div class="item">
                         <i class="circle green icon"></i>
                         <div class="content">
-                            <div class="description">The more Kairo you own, the more money you will manage, the more commission you will receive.</div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="item">
-                        <i class="circle green icon"></i>
-                        <div class="content">
-                            <div class="description">You will be able to earn Kairo by making profitable investments.</div>
+                            <div class="description">You can only join the IAO once.</div>
                         </div>
                         <br>
                     </div>
@@ -117,6 +117,8 @@
                 <p></p>
             </div>
             <div class="column">
+                <div class="ui hidden divider"></div>
+                <div class="ui hidden divider"></div>
                 <div class="ui segment">
                     <div class="ui fluid form success">
                         <div class="field">
@@ -126,22 +128,27 @@
                                 <button class="ui button kro_btn positive" value="50">$50 • 25 KRO</button>
                                 <button class="ui button kro_btn" value="100">$100 • 50 KRO</button>
                             </div>
-                            
                         </div>
+
                         <div class="ui success message" style="display: none" id="referred_msg">
                             <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
                         </div>
+
                         <div class="field">
                             <label>2. Choose your payment method:</label>
                             <select id="dropdown"></select>
-                            <label>Payment amount: <span id="pay_token_amount">loading...</span></label>
                         </div>
+
+                        Payment amount: <b id="pay_token_amount">loading...</b>
+                        <p></p>
+
                         <div class="inline field">
                             <div class="ui checkbox">
                                 <input type="checkbox" tabindex="0" class="hidden">
-                                <label>By purchasing an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
+                                <label>By buying an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
                             </div>
                         </div>
+
                         <div class="two ui buttons">
                             <button class="ui primary button disabled continue" id="metamask_btn">
                                 <img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">
@@ -156,15 +163,11 @@
                         <div class="ui horizontal divider">
                             OR
                         </div>
-                        <div class="field">
-                            <label>Send <span id="eth_price"></span> ETH directly to this ENS address</label>
-                            <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
-                        </div>
+                        Send <b id="eth_price">loading...</b> <b>ETH</b> to <a target="_blank" href="https://etherscan.io/address/iao.betokenfund.eth">iao.betokenfund.eth</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="ui hidden divider"></div>
     </div>
     <!-- CTA footer -->
     <div class="ui container">
