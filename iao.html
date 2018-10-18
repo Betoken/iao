@@ -100,9 +100,9 @@
                     var amountInDAI = window.payAmountInDAI;
                     var referrer = getUrlParameter('referrer');
                     console.log(referrer);
-                    console.log(typeof(referrer) == undefined);
-                    console.log(typeof(referrer) === undefined);
-                    referrer = typeof(referrer) == undefined ? '0x0000000000000000000000000000000000000000' : referrer;
+                    console.log(typeof(referrer) == 'undefined');
+                    console.log(typeof(referrer) === 'undefined');
+                    referrer = typeof(referrer) === 'undefined' ? '0x0000000000000000000000000000000000000000' : referrer;
                     switch (symbol) {
                         case 'ETH':
                             return window.registerWithETH(amountInDAI, referrer);
