@@ -36,6 +36,21 @@
     <meta name="msapplication-config" content="semantic/dist/themes/default/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
     <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
         $(document)
         .ready(() => {
             // init
@@ -50,6 +65,7 @@
             });
             //$('#referred_msg').show();
             updatePayAmount = (symbol) => {
+                $('#pay_token_amount').text('loading...');
                 return window.getAccountPriceInTokens(symbol, window.payAmountInDAI).then((price) => {
                     $('#pay_token_amount').text(`${price} ${symbol}`);
                     return price;
@@ -61,6 +77,7 @@
                     return price;
                 });
             }
+            // load the initial price
             updateETHPrice().then((price) => {
                 $('#pay_token_amount').text(`${price} ETH`);
             });
@@ -77,7 +94,28 @@
                 updateETHPrice();
             });
 
-            // load tokens
+            $('.continue').on('click', (e) => {
+                var register = () => {
+                    var symbol = $('#dropdown')[0].value;
+                    var amountInDAI = window.payAmountInDAI;
+                    var referrer = getUrlParameter('referrer');
+                    switch (symbol) {
+                        case 'ETH':
+                            return window.registerWithETH(amountInDAI, referrer);
+                        case 'DAI':
+                            return window.registerWithDAI(amountInDAI, referrer);
+                        default:
+                            return window.registerWithToken(symbol, amountInDAI, referrer);
+                    }
+                }
+                if (e.currentTarget.id === 'metamask_btn') {
+                    window.loadWeb3(false).then(register);
+                } else if (e.currentTarget.id === 'ledger_btn') {
+                    window.loadWeb3(true, 'ropsten').then(register);
+                }
+            });
+
+            // load token dropdown
             var dropdown = $('#dropdown');
             window.getTokenList().then(
                 (tokens) => {
@@ -190,7 +228,7 @@
                         <div class="field">
                             <label>2. Choose your payment method:</label>
                             <select id="dropdown"></select>
-                            <label>Payment amount: <span id="pay_token_amount"></span></label>
+                            <label>Payment amount: <span id="pay_token_amount">loading...</span></label>
                         </div>
                         <div class="inline field">
                             <div class="ui checkbox">
