@@ -54,8 +54,7 @@ loadWeb3 = (useLedger, network) ->
         
         # Non-dapp browsers...
         else
-            # TODO: show need-metamask message
-            console.log "Non-Ethereum browser detected. You should consider trying MetaMask!"
+            alert("Non-Ethereum browser detected. You should consider trying MetaMask!")
     
     # set default account
     web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
@@ -99,6 +98,23 @@ getTokenPairs = () ->
     tokensInformation = await request.json()
     return tokensInformation
 
+# returns list of supported tokens
+# Format:
+# [
+#     {
+#         "symbol":"ZIL",
+#         "cmcName":"ZIL",
+#         "name":"Zilliqa",
+#         "decimals":12,
+#         "contractAddress":"0x05f4a42e251f2d52b8ed15e9fedaacfcef1fad27"
+#     },
+#     … (other tokens' information)
+# ]
+getTokenList = () ->
+    request = await fetch "https://tracker.kyber.network/api/tokens/supported"
+    tokensInformation = await request.json()
+    return tokensInformation
+
 # get info of a token, given its symbol (ticker)
 getTokenInfo = (symbol) ->
     tokenPairs = await getTokenPairs()
@@ -107,14 +123,18 @@ getTokenInfo = (symbol) ->
 # get the price of the account in terms of the given token.
 # amountInDAI is the price of the account in DAI
 getAccountPriceInTokens = (symbol, amountInDAI) ->
-    tokenPairs = await getTokenPairs()
-    tokenInfo = getTokenInfo(symbol, tokenPairs)
-    daiInfo = getTokenInfo("DAI", tokenPairs)
+    if symbol != "ETH"
+        tokenInfo = await getTokenInfo(symbol)
+        daiInfo = await getTokenInfo("DAI")
 
-    ethPerToken = tokenInfo.currentPrice
-    ethPerDAI = daiInfo.currentPrice
-    tokenPerDAI = ethPerDAI / ethPerToken
-    return tokenPerDAI * amountInDAI
+        ethPerToken = tokenInfo.currentPrice
+        ethPerDAI = daiInfo.currentPrice
+        tokenPerDAI = ethPerDAI / ethPerToken
+        return tokenPerDAI * amountInDAI
+    else
+        tokenInfo = await getTokenInfo("DAI")
+        ethPerDAI = tokenInfo.currentPrice
+        return ethPerDAI * amountInDAI
 
 
 #
@@ -209,3 +229,12 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
             })
         }
     )
+
+
+# export functions to window
+window.loadWeb3 = loadWeb3
+window.getTokenList = getTokenList
+window.getAccountPriceInTokens = getAccountPriceInTokens
+window.registerWithDAI = registerWithDAI
+window.registerWithETH = registerWithETH
+window.registerWithToken = registerWithToken
