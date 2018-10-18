@@ -26195,6 +26195,7 @@ module.exports=[
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
+    referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
       from: web3.eth.defaultAccount,
@@ -26217,6 +26218,7 @@ module.exports=[
     // init
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
+    referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
@@ -26237,6 +26239,7 @@ module.exports=[
     // init
     tokenInfo = (await getTokenInfo(symbol));
     daiInfo = (await getTokenInfo("DAI"));
+    referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     // calculate amount in tokens

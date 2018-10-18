@@ -148,6 +148,7 @@ registerWithDAI = (amountInDAI, referrer) ->
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     # approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
@@ -172,6 +173,7 @@ registerWithETH = (amountInDAI, referrer) ->
     # init
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
@@ -194,6 +196,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     # init
     tokenInfo = await getTokenInfo(symbol)
     daiInfo = await getTokenInfo("DAI")
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
