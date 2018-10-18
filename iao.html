@@ -99,6 +99,7 @@
                     var symbol = $('#dropdown')[0].value;
                     var amountInDAI = window.payAmountInDAI;
                     var referrer = getUrlParameter('referrer');
+                    referrer = referrer == undefined ? '0x0000000000000000000000000000000000000000' : referrer;
                     switch (symbol) {
                         case 'ETH':
                             return window.registerWithETH(amountInDAI, referrer);
