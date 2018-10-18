@@ -7,7 +7,7 @@ iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
-IAO_ADDRESS = "0xD39fBd481f051F7E801D5A764EDcA6dD00b604FC"
+IAO_ADDRESS = "0x71C20308070d58983a7D96C73927E5145e908121"
 
 
 #
