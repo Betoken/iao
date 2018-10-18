@@ -63,7 +63,11 @@
                     $('.continue').addClass('disabled');
                 }
             });
-            //$('#referred_msg').show();
+            if (typeof(getUrlParameter('referrer')) != 'undefined') {
+                $('#referred_msg').show();
+            }
+
+            // helpers
             updatePayAmount = (symbol) => {
                 $('#pay_token_amount').text('loading...');
                 return window.getAccountPriceInTokens(symbol, window.payAmountInDAI).then((price) => {
@@ -77,7 +81,8 @@
                     return price;
                 });
             }
-            // load the initial price
+
+            // load the initial price in ETH
             updateETHPrice().then((price) => {
                 $('#pay_token_amount').text(`${price} ETH`);
             });
