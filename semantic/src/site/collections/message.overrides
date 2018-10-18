@@ -1,0 +1,10 @@
+/*******************************
+        Site Overrides
+*******************************/
+.ui.success.message{
+  background-color: @lightGreen;
+  border-color : #D1DCDF;
+}
+.ui.success.message p{
+  font-size: 14px;
+}

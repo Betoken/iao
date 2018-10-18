@@ -1,0 +1,12 @@
+/*******************************
+         Site Overrides
+*******************************/
+.ui.form .field>label{
+  margin-bottom: 16px;
+}
+.ui.form input{
+  min-height: 48px;
+}
+.ui.form select{
+  height: 48px;
+}

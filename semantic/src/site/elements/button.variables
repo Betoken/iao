@@ -1,0 +1,8 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+@horizontalMargin: unit((8 / 16), em);
+@horizontalPadding: unit((12 / 16), em);
+@lineHeight: 1.5em;
+@fontWeight: @normal;
+@labeledLabelFontSize: @mediumSize;

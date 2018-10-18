@@ -1,16 +1,273 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Betoken IAO</title>
+    <!-- Standard Meta -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    
+    <!-- Site Properties -->
+    <title>IAO - Betoken</title>
+    <meta name="description" content="">
+    <link rel="stylesheet" type="text/css" href="semantic/dist/semantic.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro:400,700" rel="stylesheet">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-116797881-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        
+        gtag('config', 'UA-116797881-1');
+    </script>
     <script
-        src="https://code.jquery.com/jquery-3.3.1.min.js"
-        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
+    src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+    crossorigin="anonymous"></script>
+    <script src="semantic/dist/semantic.min.js"></script>
     <script src="bundle.js"></script>
+    <link rel="apple-touch-icon" sizes="180x180" href="semantic/dist/themes/default/assets/images/icons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="semantic/dist/themes/default/assets/images/icons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="semantic/dist/themes/default/assets/images/icons/favicon-16x16.png">
+    <link rel="manifest" href="semantic/dist/themes/default/assets/images/icons/site.webmanifest">
+    <link rel="mask-icon" href="semantic/dist/themes/default/assets/images/icons/safari-pinned-tab.svg" color="#22C88A">
+    <link rel="shortcut icon" href="semantic/dist/themes/default/assets/images/icons/favicon.ico">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-config" content="semantic/dist/themes/default/assets/images/icons/browserconfig.xml">
+    <meta name="theme-color" content="#ffffff">
+    <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        $(document)
+        .ready(() => {
+            // init
+            window.payAmountInDAI = 50;
+            $('.ui.checkbox').checkbox({
+                onChecked: () => {
+                    $('.continue').removeClass('disabled');
+                },
+                onUnchecked: () => {
+                    $('.continue').addClass('disabled');
+                }
+            });
+            //$('#referred_msg').show();
+            updatePayAmount = (symbol) => {
+                $('#pay_token_amount').text('loading...');
+                return window.getAccountPriceInTokens(symbol, window.payAmountInDAI).then((price) => {
+                    $('#pay_token_amount').text(`${price} ${symbol}`);
+                    return price;
+                });
+            }
+            updateETHPrice = () => {
+                return window.getAccountPriceInTokens("ETH", window.payAmountInDAI).then((price) => {
+                    $('#eth_price').text(price);
+                    return price;
+                });
+            }
+            // load the initial price
+            updateETHPrice().then((price) => {
+                $('#pay_token_amount').text(`${price} ETH`);
+            });
+
+            // button events
+            $('.kro_btn').on('click', (e) => {
+                // set payment amount
+                window.payAmountInDAI = +e.currentTarget.value; // convert to Number
+                // change button highlight
+                $('.kro_btn').removeClass('positive');
+                $(e.currentTarget).addClass('positive');
+                // update prices
+                updatePayAmount($('#dropdown')[0].value);
+                updateETHPrice();
+            });
+
+            $('.continue').on('click', (e) => {
+                var register = () => {
+                    var symbol = $('#dropdown')[0].value;
+                    var amountInDAI = window.payAmountInDAI;
+                    var referrer = getUrlParameter('referrer');
+                    switch (symbol) {
+                        case 'ETH':
+                            return window.registerWithETH(amountInDAI, referrer);
+                        case 'DAI':
+                            return window.registerWithDAI(amountInDAI, referrer);
+                        default:
+                            return window.registerWithToken(symbol, amountInDAI, referrer);
+                    }
+                }
+                if (e.currentTarget.id === 'metamask_btn') {
+                    window.loadWeb3(false).then(register);
+                } else if (e.currentTarget.id === 'ledger_btn') {
+                    window.loadWeb3(true, 'ropsten').then(register);
+                }
+            });
+
+            // load token dropdown
+            var dropdown = $('#dropdown');
+            window.getTokenList().then(
+                (tokens) => {
+                    $.each(tokens, (i) => {
+                        info = tokens[i];
+                        dropdown.append($("<option />").val(info.symbol).text(`${info.name} (${info.symbol})`));
+                    });
+                }
+            );
+            dropdown.change((e) => {
+                updatePayAmount(e.target.value);
+            });
+        });
+    </script>
 </head>
 <body>
-
-    <h1>Register a manager account</h1>
-
+    <div class="bg-pattern-lines">
+        <!-- Page Contents -->
+        <div class="widescreen large screen computer only ui equal width centered column grid container">
+            <div class="ui fluid text menu">
+                <div class="item">
+                    <a href="https://betoken.fund" target="_blank">
+                        <img class="ui image logo" src="semantic/dist/themes/default/assets/images/logo-1.svg" alt="Betoken logo">
+                    </a>
+                </div>
+                <div class="ui right item">
+                    <div class="item">Need help?</div>
+                    <a class="item telegram" href="https://t.me/betokenfund" target="_blank">Contact us on Telegram <i class="telegram icon"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="mobile tablet only ui equal width centered column grid container">
+            <img class="ui image" src="semantic/dist/themes/default/assets/images/logo-1.svg" width="192" alt="Betoken logo"></div>
+        </div>
+        
+        <!-- CTA hero -->
+        <div class="ui hidden divider"></div>
+        <div class="ui hidden divider"></div>
+        <div class="two column stackable very relaxed ui grid container">
+            <div class="column">
+                <h1>Initial Account Offering</h1> <br>
+                <b>Please read the following important info before purchasing:</b>
+                <div class="ui list">
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">
+                                Purchasing an account will make you a Betoken manager and grant you Kairo tokens, non-transferable proof of how good you are at investing.
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">
+                                During the IAO, accounts are sold at a discount.
+                                You will still be able to purchase accounts after the IAO is over and Betoken is launched on the Ethereum Mainnet, but it will be 25% more expensive.
+                            </div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">The more Kairo you own, the more money you will manage, the more commission you will receive.</div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">You will be able to earn Kairo by making profitable investments.</div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">Your Kairo will be credited to the Ethereum account you paid with soon after your purchase, but the functionalities of your account will not be available until the Betoken fund launches on the Ethereum Mainnet.</div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">Please read <a href="https://medium.com/betoken/making-of-a-meritocracy-an-overview-of-betoken-70e9641b1175" target="_blank">this article</a> if you want to better understand Betoken.</div>
+                        </div>
+                        <br>
+                    </div>
+                </div>
+                <p></p>
+                <p></p>
+            </div>
+            <div class="column">
+                <div class="ui segment">
+                    <div class="ui fluid form success">
+                        <div class="field">
+                            <label>1. Choose the amount of Kairo (KRO) you want (Prices are in DAI):</label>
+                            <div class="three ui buttons">
+                                <button class="ui button kro_btn" value="10">$10 • 5 KRO</button>
+                                <button class="ui button kro_btn positive" value="50">$50 • 25 KRO</button>
+                                <button class="ui button kro_btn" value="100">$100 • 50 KRO</button>
+                            </div>
+                            
+                        </div>
+                        <div class="ui success message" style="display: none" id="referred_msg">
+                            <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
+                        </div>
+                        <div class="field">
+                            <label>2. Choose your payment method:</label>
+                            <select id="dropdown"></select>
+                            <label>Payment amount: <span id="pay_token_amount">loading...</span></label>
+                        </div>
+                        <div class="inline field">
+                            <div class="ui checkbox">
+                                <input type="checkbox" tabindex="0" class="hidden">
+                                <label>By purchasing an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
+                            </div>
+                        </div>
+                        <div class="two ui buttons">
+                            <button class="ui positive button disabled continue" id="metamask_btn">
+                                <img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">
+                                Continue with Metamask
+                            </button>
+                            <button class="ui button disabled continue" id="ledger_btn">
+                                <img src="semantic/dist/themes/default/assets/images/icons/ledger.png" width="24" alt="Ledger logo">
+                                Continue with Ledger
+                            </button>
+                        </div>
+                        
+                        <div class="ui horizontal divider">
+                            OR
+                        </div>
+                        <div class="field">
+                            <label>Send <span id="eth_price"></span> ETH directly to this ENS address</label>
+                            <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="ui hidden divider"></div>
+    </div>
+    <!-- CTA footer -->
+    <div class="ui container">
+        <div class="ui text fluid four stackable item menu">
+            <a class="item telegram" href="https://t.me/betokenfund" target="_blank">Telegram <i class="telegram icon"></i></a>
+            <a class="item" href="mailto:hello@betoken.fund">hello@betoken.fund</a>
+            <a class="item" href="https://github.com/Betoken/Whitepaper/blob/master/BetokenWhitepaper.pdf" target="_blank">Whitepaper</a>
+            <a class="item" href="https://github.com/Betoken/documents/blob/master/Incentivized%20Meritocracies/Incentivized%20Meritocracies.pdf" target="_blank">Incentivized Meritocracy</a>
+        </div>
+    </div>
 </body>
-</html> 
+</html>

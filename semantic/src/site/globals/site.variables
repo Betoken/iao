@@ -1,0 +1,108 @@
+/*******************************
+         Site Settings
+*******************************/
+
+/*-------------------
+      Base Sizes
+--------------------*/
+
+/* This is the single variable that controls them all */
+@emSize   : 16px;
+
+/* The size of page text  */
+@fontSize : 16px;
+
+
+/*-------------------
+    Border Radius
+--------------------*/
+
+@relativeBorderRadius: @relative8px;
+@absoluteBorderRadius: @8px;
+
+/*--------------
+  Page Heading
+---------------*/
+
+@headerFontWeight : @bold;
+@headerLineHeight : unit((20 / 16), em);
+
+@h1 : unit((36 / 16), rem);
+
+/*--------------
+   Form Input
+---------------*/
+
+/* This adjusts the default form input across all elements */
+@inputBackground        : @white;
+@inputVerticalPadding   : @relative8px;
+@inputHorizontalPadding : @relative12px;
+
+/* Line Height Default For Inputs in Browser (Descenders are 17px at 14px base em) */
+@inputLineHeight: unit((20 / 16), em);
+
+/*-------------------
+        Page
+--------------------*/
+
+@pageBackground      : #FFFFFF;
+@pageOverflowX       : hidden;
+
+@lineHeight          : 1.5em;
+
+/*-------------------
+      Paragraph
+--------------------*/
+
+@paragraphMargin     : 0em 0em 1.5em;
+
+/*-------------------
+      Site Colors
+--------------------*/
+
+/*---  Colors  ---*/
+@red              : #F4406B;
+@orange           : #F2711C;
+@olive            : #B5CC18;
+@green            : #18DAA3;
+@grey             : #8FA9B0;
+@black            : rgba(0, 0, 0, 0.87);
+@blue             : #002B49;
+
+
+/*---  Light Colors  ---*/
+@lightGreen       : #D2FFF2;
+
+/*-------------------
+    Brand Colors
+--------------------*/
+
+@primaryColor        : @blue;
+@secondaryColor      : @green;
+
+@lightPrimaryColor   : @lightBlue;
+@lightSecondaryColor : @lightBlack;
+
+
+/*-------------------
+       Links
+--------------------*/
+
+@linkColor           : @green;
+
+/*-------------------
+      Borders
+--------------------*/
+
+@borderColor               : #D1DCDF;
+
+/*-------------------
+    Emotive Colors
+--------------------*/
+
+/* Positive */
+@positiveColor           : @green;
+@positiveBackgroundColor : @lightGreen;
+@positiveBorderColor     : #D1DCDF;
+@positiveHeaderColor     : #green;
+@positiveTextColor       : #green;

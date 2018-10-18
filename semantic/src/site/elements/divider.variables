@@ -1,0 +1,7 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@medium:  unit((14 / 16), em);
+@fontWeight: @normal;
+@textTransform: none;
