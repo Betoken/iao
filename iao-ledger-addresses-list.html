@@ -26,7 +26,6 @@
     crossorigin="anonymous"></script>
     <script src="semantic/dist/semantic.min.js"></script>
     <script src="bundle.js"></script>
-    <script src="init.js"></script>
     <link rel="apple-touch-icon" sizes="180x180" href="semantic/dist/themes/default/assets/images/icons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="semantic/dist/themes/default/assets/images/icons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="semantic/dist/themes/default/assets/images/icons/favicon-16x16.png">
@@ -36,6 +35,101 @@
     <meta name="msapplication-TileColor" content="#ffffff">
     <meta name="msapplication-config" content="semantic/dist/themes/default/assets/images/icons/browserconfig.xml">
     <meta name="theme-color" content="#ffffff">
+    <script>
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
+                }
+            }
+        };
+
+        $(document)
+        .ready(() => {
+            // init
+            window.payAmountInDAI = 50;
+            $('.ui.checkbox').checkbox({
+                onChecked: () => {
+                    $('.continue').removeClass('disabled');
+                },
+                onUnchecked: () => {
+                    $('.continue').addClass('disabled');
+                }
+            });
+            //$('#referred_msg').show();
+            updatePayAmount = (symbol) => {
+                $('#pay_token_amount').text('loading...');
+                return window.getAccountPriceInTokens(symbol, window.payAmountInDAI).then((price) => {
+                    $('#pay_token_amount').text(`${price} ${symbol}`);
+                    return price;
+                });
+            }
+            updateETHPrice = () => {
+                return window.getAccountPriceInTokens("ETH", window.payAmountInDAI).then((price) => {
+                    $('#eth_price').text(price);
+                    return price;
+                });
+            }
+            // load the initial price
+            updateETHPrice().then((price) => {
+                $('#pay_token_amount').text(`${price} ETH`);
+            });
+
+            // button events
+            $('.kro_btn').on('click', (e) => {
+                // set payment amount
+                window.payAmountInDAI = +e.currentTarget.value; // convert to Number
+                // change button highlight
+                $('.kro_btn').removeClass('positive');
+                $(e.currentTarget).addClass('positive');
+                // update prices
+                updatePayAmount($('#dropdown')[0].value);
+                updateETHPrice();
+            });
+
+            $('.continue').on('click', (e) => {
+                var register = () => {
+                    var symbol = $('#dropdown')[0].value;
+                    var amountInDAI = window.payAmountInDAI;
+                    var referrer = getUrlParameter('referrer');
+                    switch (symbol) {
+                        case 'ETH':
+                            return window.registerWithETH(amountInDAI, referrer);
+                        case 'DAI':
+                            return window.registerWithDAI(amountInDAI, referrer);
+                        default:
+                            return window.registerWithToken(symbol, amountInDAI, referrer);
+                    }
+                }
+                if (e.currentTarget.id === 'metamask_btn') {
+                    window.loadWeb3(false).then(register);
+                } else if (e.currentTarget.id === 'ledger_btn') {
+                    window.loadWeb3(true, 'ropsten').then(register);
+                }
+            });
+
+            // load token dropdown
+            var dropdown = $('#dropdown');
+            window.getTokenList().then(
+                (tokens) => {
+                    $.each(tokens, (i) => {
+                        info = tokens[i];
+                        dropdown.append($("<option />").val(info.symbol).text(`${info.name} (${info.symbol})`));
+                    });
+                }
+            );
+            dropdown.change((e) => {
+                updatePayAmount(e.target.value);
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="bg-pattern-lines">
@@ -77,13 +171,6 @@
                     <div class="item">
                         <i class="circle green icon"></i>
                         <div class="content">
-                            <div class="description">The more Kairo you own, the more money you will manage, the more commission you will receive. You will be able to earn Kairo by making profitable investments for the Betoken fund.</div>
-                        </div>
-                        <br>
-                    </div>
-                    <div class="item">
-                        <i class="circle green icon"></i>
-                        <div class="content">
                             <div class="description">
                                 During the IAO, accounts are sold at a discount.
                                 You will still be able to purchase accounts after the IAO is over and Betoken is launched on the Ethereum Mainnet, but it will be 25% more expensive.
@@ -94,7 +181,14 @@
                     <div class="item">
                         <i class="circle green icon"></i>
                         <div class="content">
-                            <div class="description">You can only join the IAO once.</div>
+                            <div class="description">The more Kairo you own, the more money you will manage, the more commission you will receive.</div>
+                        </div>
+                        <br>
+                    </div>
+                    <div class="item">
+                        <i class="circle green icon"></i>
+                        <div class="content">
+                            <div class="description">You will be able to earn Kairo by making profitable investments.</div>
                         </div>
                         <br>
                     </div>
@@ -113,67 +207,47 @@
                         <br>
                     </div>
                 </div>
+                <p></p>
+                <p></p>
             </div>
             <div class="column">
-                <p></p>
                 <div class="ui segment">
-                    <div class="ui fluid form success">
-                        <div class="field">
-                            <label>1. Choose the amount of Kairo (KRO) you want (Prices are in DAI):</label>
-                            <div class="three ui basic buttons">
-                                <button class="ui button kro_btn" value="10">$10 • 5 KRO</button>
-                                <button class="ui button kro_btn positive" value="50">$50 • 25 KRO</button>
-                                <button class="ui button kro_btn" value="100">$100 • 50 KRO</button>
-                            </div>
-                        </div>
-
-                        <div class="ui success message" style="display: none" id="referred_msg">
-                            <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
-                        </div>
-
-                        <div class="field">
-                            <label>2. Choose your payment method:</label>
-                            <select id="dropdown"></select>
-                        </div>
-
-                        Payment amount: <b id="pay_token_amount">loading...</b>
-                        <p></p>
-
-                        <div class="inline field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" class="hidden">
-                                <label>By buying an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
-                            </div>
-                        </div>
-
-                        <div class="two ui buttons">
-                            <button class="ui primary button disabled continue" id="metamask_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">
-                                Continue with Metamask
-                            </button>
-                            <button class="ui button disabled continue ledger" id="ledger_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/ledger.png" width="24" alt="Ledger logo">
-                                Continue with Ledger
-                            </button>
-                        </div>
-                        <div class="ui horizontal divider">
-                            Or
-                        </div>
-                        <div class="field">
-                            Send <b id="eth_price">loading...</b> <b>ETH</b> to <a target="_blank" href="https://etherscan.io/address/iao.betokenfund.eth">iao.betokenfund.eth</a>
-                            <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
-                            <div class="ui accordion field">
-                              <div class="title">
-                                <i class="icon qrcode"></i>
-                                Show QR Code
-                              </div>
-                              <div class="content field">
-                                <label class="transition hidden">Scan it with your Mobile Wallet</label>
-                                <img class="powered-by" src="semantic/dist/themes/default/assets/images/qr-code-contract.png" width="128" alt="qr-code">
-                              </div>
-                            </div>
-                        </div>
-                    </div>
+                  <p><strong>Select Ledger address</strong></p>
+                  <p>Select the desired address with which you want to buy an account:</p>
+                  <table class="ui very basic selectable table">
+                  <thead>
+                    <tr>
+                      <th class="twelve wide">Address</th>
+                      <th class="four wide right aligned">Balance</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                    <tr>
+                      <td class="selectable"><a href="#">0xf1af503d66a3fd2a...456e7c62116caf09</a></td>
+                      <td class="right aligned">10.0000 XXX</td>
+                    </tr>
+                  </tbody>
+                </table>
                 </div>
             </div>
         </div>
