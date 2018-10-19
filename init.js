@@ -38,6 +38,7 @@ $(document)
         });
     }
     updateETHPrice = () => {
+        $('#eth_price').text('loading...');
         return window.getAccountPriceInTokens("ETH", window.payAmountInDAI).then((price) => {
             $('#eth_price').text(price);
             return price;
