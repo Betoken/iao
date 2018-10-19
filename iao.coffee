@@ -1,14 +1,18 @@
 # libraries
 Web3 = require "web3"
 fetch = require "node-fetch"
+ENS = require "ethjs-ens"
+HttpProvider = require "ethjs-provider-http"
 
 # smart contract ABI's
 iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
+provider = new HttpProvider("https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c")
+ens = new ENS({ provider, network: '1' })
 IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9"
-
+IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 
 #
 # HELPERS
@@ -58,6 +62,11 @@ loadWeb3 = (useLedger, network) ->
     
     # set default account
     web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
+
+    # check iao address
+    iao_address = await ens.lookup(IAO_ENS_ADDRESS)
+    IAO_ADDRESS = if (iao_address? && IAO_ADDRESS != iao_address) then iao_address else IAO_ADDRESS
+
 
 # returns the IAO contract object
 IAOContract = () ->
