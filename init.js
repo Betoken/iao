@@ -97,4 +97,8 @@ $(document)
     dropdown.change((e) => {
         updatePayAmount(e.target.value);
     });
+
+    $('.ui.accordion')
+        .accordion()
+    ;
 });
