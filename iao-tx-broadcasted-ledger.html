@@ -212,52 +212,28 @@
             </div>
             <div class="column">
                 <div class="ui segment">
-                    <div class="ui fluid form success">
-                        <div class="field">
-                            <label>1. Choose the amount of Kairo (KRO) you want (Prices are in DAI):</label>
-                            <div class="three ui basic buttons">
-                                <button class="ui button kro_btn" value="10">$10 • 5 KRO</button>
-                                <button class="ui button kro_btn positive" value="50">$50 • 25 KRO</button>
-                                <button class="ui button kro_btn" value="100">$100 • 50 KRO</button>
-                            </div>
-
-                        </div>
-                        <div class="ui success message" style="display: none" id="referred_msg">
-                            <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
-                        </div>
-                        <div class="field">
-                            <label>2. Choose your payment method:</label>
-                            <select id="dropdown"></select>
-                            <label class="payment-amount">Payment amount: <span id="pay_token_amount">loading...</span></label>
-                        </div>
-                        <div class="inline field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" class="hidden">
-                                <label>By purchasing an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
-                            </div>
-                        </div>
-                        <div class="two ui buttons">
-                            <button class="ui primary button disabled continue" id="metamask_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">
-                                Continue with Metamask
-                            </button>
-                            <button class="ui button disabled continue ledger" id="ledger_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/ledger.png" width="24" alt="Ledger logo">
-                                Continue with Ledger
-                            </button>
-                        </div>
-                        <div class="ui horizontal divider">
-                            Or
-                        </div>
-                        <div class="field">
-                            <label>Send <span id="eth_price"></span> ETH directly to this ENS address</label>
-                            <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
-                        </div>
-                    </div>
+                  <p><strong>🎉 Transaction was broadcasted!</strong></p>
+                  <p>Your transaction is being saved on the Ethereum blockchain. You can check its status on <a href="" title="" target="_blank">Etherscan</a>.</p>
+                  <div class="ui fluid form success">
+                      <div class="field">
+                          <label>Transaction ID:</label>
+                          <input type="text" name="" placeholder="0x" value="0x" readonly>
+                      </div>
+                      <div class="ui hidden divider"></div>
+                      <p><strong>Invite friends. Earn 10% free Kairo.</strong></p>
+                      <p>Introduce a friend to Betoken. You will both get 10% of free Kairo when your friend buys a Betoken account manager. Tip: share it on Telegram and Facebook groups to have a lot of bonus.</p>
+                      <div class="field">
+                          <label>Share your link with your friends.</label>
+                          <input type="text" name="" placeholder="https://betoken.fund/?ref=0x7c9c" value="https://betoken.fund/?ref=0x7c9c" readonly>
+                      </div>
+                      <a href="" title="Share it on Twitter"><i class="twitter icon"></i> SHARE IT ON TWITTER</a>
+                      <div class="ui hidden divider"></div>
+                      <button class="ui primary fluid button">VISIT OUR PRIVATE BETA</button>
+                      <p>Disclaimer: private Beta requires to have Beta Kairo.</p>
+                  </div>
                 </div>
             </div>
         </div>
-        <div class="ui hidden divider"></div>
     </div>
     <!-- CTA footer -->
     <div class="ui container">

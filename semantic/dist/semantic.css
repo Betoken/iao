@@ -1259,12 +1259,21 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   top: 0px;
   background-image: url('themes/default/assets/images/bg-pattern-lines.svg');
   background-position: right;
-  background-position-y: 48px;
+  background-position-y: 64px;
   background-repeat: no-repeat;
 }
 
 .telegram {
   color: #0088cc;
+}
+
+.payment-amount {
+  margin: 8px 0 24px!important;
+}
+
+.powered-by {
+  display: block;
+  margin: 0 auto;
 }
 
 @media only screen and (max-width: 600px) {
@@ -5644,9 +5653,27 @@ body .ui.inverted::-webkit-scrollbar-thumb:hover {
   margin-right: 8px;
 }
 
-.greenlight.button {
-  background-color: #D2FFF2;
-  border: 1px solid #A2F5DD;
+.ui.button.continue.ledger {
+  background-color: white;
+  border: 1px solid #ededed;
+}
+
+.ui.button.kro_btn.positive {
+  background-color: #18DAA3 !important;
+  border: 1px solid #18DAA3 !important;
+  color: white!important;
+}
+
+.ui.button.kro_btn.positive:hover {
+  background-color: #18DAA3 !important;
+  border: 1px solid #18DAA3 !important;
+  color: white!important;
+}
+
+.ui.button.kro_btn.positive:focus {
+  background-color: #18DAA3 !important;
+  border: 1px solid #18DAA3 !important;
+  color: white!important;
 }
 /*!
  * # Semantic UI 2.4.1 - Container

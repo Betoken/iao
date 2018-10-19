@@ -212,48 +212,16 @@
             </div>
             <div class="column">
                 <div class="ui segment">
-                    <div class="ui fluid form success">
-                        <div class="field">
-                            <label>1. Choose the amount of Kairo (KRO) you want (Prices are in DAI):</label>
-                            <div class="three ui basic buttons">
-                                <button class="ui button kro_btn" value="10">$10 • 5 KRO</button>
-                                <button class="ui button kro_btn positive" value="50">$50 • 25 KRO</button>
-                                <button class="ui button kro_btn" value="100">$100 • 50 KRO</button>
-                            </div>
-
-                        </div>
-                        <div class="ui success message" style="display: none" id="referred_msg">
-                            <p>You will receive 10% bonus Kairo because you have been referred by a good friend. Your friend will get the same bonus.</p>
-                        </div>
-                        <div class="field">
-                            <label>2. Choose your payment method:</label>
-                            <select id="dropdown"></select>
-                            <label class="payment-amount">Payment amount: <span id="pay_token_amount">loading...</span></label>
-                        </div>
-                        <div class="inline field">
-                            <div class="ui checkbox">
-                                <input type="checkbox" tabindex="0" class="hidden">
-                                <label>By purchasing an account, you agree to our <a href="https://docs.google.com/document/d/1S1sz5O3fAG5u0unCPoVpB_ADpZBpwA_Gyvd1Rm1Obqg/edit?usp=sharing" target="_blank">Terms and conditions</a>.</label>
-                            </div>
-                        </div>
-                        <div class="two ui buttons">
-                            <button class="ui primary button disabled continue" id="metamask_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/metamask.png" width="24" alt="Metamask logo">
-                                Continue with Metamask
-                            </button>
-                            <button class="ui button disabled continue ledger" id="ledger_btn">
-                                <img src="semantic/dist/themes/default/assets/images/icons/ledger.png" width="24" alt="Ledger logo">
-                                Continue with Ledger
-                            </button>
-                        </div>
-                        <div class="ui horizontal divider">
-                            Or
-                        </div>
-                        <div class="field">
-                            <label>Send <span id="eth_price"></span> ETH directly to this ENS address</label>
-                            <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
-                        </div>
-                    </div>
+                  <p><strong>🚨 An error occured</strong></p>
+                  <p>Cannot connect to your Ledger. Please check if:</p>
+                  <ul>
+                    <li>Your Ledger is properly plugged in.</li>
+                    <li>You have logged into your Ledger.</li>
+                    <li>You have launched Ethereum Application on your Ledger.</li>
+                    <li>"Browser Support" has been enabled in your Ledger. Learn to enable "Browser Support" here.</li>
+                  </ul>
+                  <div class="ui hidden divider"></div>
+                  <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/ledger-big.png" width="128" alt="ledger-logo"></p>
                 </div>
             </div>
         </div>
