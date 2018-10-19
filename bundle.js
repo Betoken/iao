@@ -26063,7 +26063,7 @@ module.exports=[
   // HELPERS
 
   // loads web3 as a global variable
-  loadWeb3 = async function(useLedger, network) {
+  loadWeb3 = async function(useLedger) {
     var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, engine, error, iao_address, ledgerWalletSubProvider, networkId;
     if (useLedger) {
       // Use ledger-wallet-provider to load web3
@@ -26072,13 +26072,13 @@ module.exports=[
       LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
       engine = new ProviderEngine;
       window.web3 = new Web3(engine);
-      networkId = network === "mainnet" ? 1 : 3;
+      networkId = 1;
       ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
         return networkId;
       }, "44'/60'/0'/0"));
       engine.addProvider(ledgerWalletSubProvider);
       engine.addProvider(new RpcSubprovider({
-        rpcUrl: `https://${network}.infura.io/v3/7a7dd3472294438eab040845d03c215c`
+        rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
       }));
       engine.start();
     } else {
@@ -26108,6 +26108,7 @@ module.exports=[
     
     // set default account
     web3.eth.defaultAccount = ((await web3.eth.getAccounts()))[0];
+    console.log((await web3.eth.getAccounts()));
     // check iao address
     iao_address = (await ens.lookup(IAO_ENS_ADDRESS));
     return IAO_ADDRESS = ((iao_address != null) && IAO_ADDRESS !== iao_address) ? iao_address : IAO_ADDRESS;
@@ -26280,6 +26281,8 @@ module.exports=[
   };
 
   // export functions to window
+  window.IAO_ADDRESS = IAO_ADDRESS;
+
   window.loadWeb3 = loadWeb3;
 
   window.getTokenList = getTokenList;

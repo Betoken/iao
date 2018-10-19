@@ -19,7 +19,7 @@ IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 #
 
 # loads web3 as a global variable
-loadWeb3 = (useLedger, network) ->
+loadWeb3 = (useLedger) ->
     if useLedger
         # Use ledger-wallet-provider to load web3
         ProviderEngine = require "web3-provider-engine"
@@ -29,14 +29,14 @@ loadWeb3 = (useLedger, network) ->
         engine = new ProviderEngine
         window.web3 = new Web3 engine
 
-        networkId = if network == "mainnet" then 1 else 3
+        networkId = 1
         ledgerWalletSubProvider = await LedgerWalletSubproviderFactory(
             () -> networkId,
             "44'/60'/0'/0"
         )
         engine.addProvider ledgerWalletSubProvider
         engine.addProvider new RpcSubprovider {
-            rpcUrl: "https://#{network}.infura.io/v3/7a7dd3472294438eab040845d03c215c"
+            rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
         }
         engine.start()
     else
@@ -62,6 +62,7 @@ loadWeb3 = (useLedger, network) ->
     
     # set default account
     web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
+    console.log(await web3.eth.getAccounts())
 
     # check iao address
     iao_address = await ens.lookup(IAO_ENS_ADDRESS)
@@ -244,6 +245,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
 
 
 # export functions to window
+window.IAO_ADDRESS = IAO_ADDRESS
 window.loadWeb3 = loadWeb3
 window.getTokenList = getTokenList
 window.getAccountPriceInTokens = getAccountPriceInTokens

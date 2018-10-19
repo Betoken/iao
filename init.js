@@ -25,9 +25,10 @@ $(document)
             $('.continue').addClass('disabled');
         }
     });
-    if (typeof(getUrlParameter('referrer')) != 'undefined') {
+    if (typeof(getUrlParameter('ref')) != 'undefined') {
         $('#referred_msg').show();
     }
+    $('.address_display').val(window.IAO_ADDRESS);
 
     // helpers
     updatePayAmount = (symbol) => {
@@ -66,7 +67,7 @@ $(document)
         var register = () => {
             var symbol = $('#dropdown')[0].value;
             var amountInDAI = window.payAmountInDAI;
-            var referrer = getUrlParameter('referrer');
+            var referrer = getUrlParameter('ref');
             referrer = typeof(referrer) === 'undefined' ? '0x0000000000000000000000000000000000000000' : referrer;
             switch (symbol) {
                 case 'ETH':
@@ -80,7 +81,7 @@ $(document)
         if (e.currentTarget.id === 'metamask_btn') {
             window.loadWeb3(false).then(register);
         } else if (e.currentTarget.id === 'ledger_btn') {
-            window.loadWeb3(true, 'mainnet').then(register);
+            window.loadWeb3(true).then(register);
         }
     });
 

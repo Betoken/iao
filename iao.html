@@ -114,8 +114,9 @@
                     </div>
                 </div>
             </div>
-            <div class="column">
-                <p></p>
+            
+            <!--IAO user flow-->
+            <div class="column" id="flow_start" style="margin-top: 1em;">
                 <div class="ui segment">
                     <div class="ui fluid form success">
                         <div class="field">
@@ -157,7 +158,7 @@
                             </button>
                         </div>
                         <div class="ui horizontal divider">
-                            Or
+                            OR
                         </div>
                         <div class="field">
                             Send <b id="eth_price">loading...</b> <b>ETH</b> to <a target="_blank" href="https://etherscan.io/address/iao.betokenfund.eth">iao.betokenfund.eth</a>
@@ -175,8 +176,51 @@
                     </div>
                 </div>
             </div>
+            
+            <div class="column" id="flow_metamask_confirm" style="display: none; margin-top: 1em;">
+                <div class="ui segment">
+                    <p><strong>Confirm transaction on your Metamask Wallet</strong></p>
+                    <p>Confirm the transaction using Metamask to continue your purchase. It's fine to stick with these defaults gas limit and price.</p>
+                    <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/metamask-big.png" width="128" alt="metamask-logo"></p>
+                    <div class="ui fluid form success">
+                        <div class="field">
+                            <label>Please verify the receipient address is the following:</label>
+                            <input type="text" class="address_display" readonly>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="column" id="flow_broadcasted" style="display: none; margin-top: 1em;">
+                <div class="ui segment">
+                    <p><strong>🎉 Transaction successfully submitted!</strong></p>
+                    <p>
+                        Your transaction will be finalized in a few minutes. <a title="Check transaction status on Etherscan" target="_blank" id="tx_link">Check status</a>
+                    </p>
+                    <div class="ui fluid form success">
+                        <p><strong>Invite your friends to earn bonus Kairo for you both!</strong></p>
+                        <p>
+                            Inviting a friend to the Betoken IAO will grant you both 10% bonus Kairo. What a win-win!
+                            <i>(10% means 10% of whatever your friend paid)</i> <br>
+                            <i>Tip: Sharing your invite link on Telegram and Twitter is a great place to start.</i>
+                        </p>
+                        <div class="field">
+                            <label>Invite link:</label>
+                            <input type="text" value="https://betoken.fund/iao/?ref=" id="invite_link" readonly>
+                        </div>
+                        <a title="Share on Twitter" id="share_twitter"><i class="twitter icon"></i> SHARE ON TWITTER</a>
+                        <p></p>
+                        <a href="https://betoken.fund/betoken-ui" target="_blank">
+                            <button class="ui primary fluid button">
+                                CHECK OUT OUR PRIVATE BETA
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            
         </div>
-        <div class="ui hidden divider"></div>
     </div>
     <!-- CTA footer -->
     <div class="ui container">
