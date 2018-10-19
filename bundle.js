@@ -26044,7 +26044,7 @@ module.exports=[
   erc20ABI = require("./erc20_abi.json");
 
   // smart contract addresses
-  IAO_ADDRESS = "0x71C20308070d58983a7D96C73927E5145e908121";
+  IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9";
 
   
   // HELPERS
