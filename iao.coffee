@@ -19,26 +19,30 @@ IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 #
 
 # loads web3 as a global variable
+# returns success
 loadWeb3 = (useLedger) ->
     if useLedger
         # Use ledger-wallet-provider to load web3
-        ProviderEngine = require "web3-provider-engine"
-        RpcSubprovider = require "web3-provider-engine/subproviders/rpc"
-        LedgerWalletSubproviderFactory = (require "ledger-wallet-provider").default
+        try
+            ProviderEngine = require "web3-provider-engine"
+            RpcSubprovider = require "web3-provider-engine/subproviders/rpc"
+            LedgerWalletSubproviderFactory = (require "ledger-wallet-provider").default
 
-        engine = new ProviderEngine
-        window.web3 = new Web3 engine
+            engine = new ProviderEngine
+            window.web3 = new Web3 engine
 
-        networkId = 1
-        ledgerWalletSubProvider = await LedgerWalletSubproviderFactory(
-            () -> networkId,
-            "44'/60'/0'/0"
-        )
-        engine.addProvider ledgerWalletSubProvider
-        engine.addProvider new RpcSubprovider {
-            rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
-        }
-        engine.start()
+            networkId = 1
+            ledgerWalletSubProvider = await LedgerWalletSubproviderFactory(
+                () -> networkId,
+                "44'/60'/0'/0"
+            )
+            engine.addProvider ledgerWalletSubProvider
+            engine.addProvider new RpcSubprovider {
+                rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
+            }
+            engine.start()
+        catch e
+            return false
     else
         # Use Metamask/other dApp browsers to load web3
         # Modern dapp browsers...
@@ -59,14 +63,16 @@ loadWeb3 = (useLedger) ->
         # Non-dapp browsers...
         else
             alert("Non-Ethereum browser detected. You should consider trying MetaMask!")
+            return false
     
     # set default account
     web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
-    console.log(await web3.eth.getAccounts())
 
     # check iao address
     iao_address = await ens.lookup(IAO_ENS_ADDRESS)
     IAO_ADDRESS = if (iao_address? && IAO_ADDRESS != iao_address) then iao_address else IAO_ADDRESS
+
+    return true
 
 
 # returns the IAO contract object
@@ -152,7 +158,7 @@ getAccountPriceInTokens = (symbol, amountInDAI) ->
 #
 
 # register with DAI. amountInDAI should be in DAI (not wei).
-registerWithDAI = (amountInDAI, referrer) ->
+registerWithDAI = (amountInDAI, referrer, txCallback) ->
     # init
     amountInWei = amountInDAI * 1e18
     tokenInfo = await getTokenInfo("DAI")
@@ -176,10 +182,10 @@ registerWithDAI = (amountInDAI, referrer) ->
                 from: web3.eth.defaultAccount
             })
         }
-    )
+    ).on("transactionHash", txCallback)
 
 # register with ETH. amountInDAI should be in DAI (not wei).
-registerWithETH = (amountInDAI, referrer) ->
+registerWithETH = (amountInDAI, referrer, txCallback) ->
     # init
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
@@ -199,10 +205,10 @@ registerWithETH = (amountInDAI, referrer) ->
             })
             value: amountInWei
         }
-    )
+    ).on("transactionHash", txCallback)
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
-registerWithToken = (symbol, amountInDAI, referrer) ->
+registerWithToken = (symbol, amountInDAI, referrer, txCallback) ->
     # init
     tokenInfo = await getTokenInfo(symbol)
     daiInfo = await getTokenInfo("DAI")
@@ -241,7 +247,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
                 from: web3.eth.defaultAccount
             })
         }
-    )
+    ).on("transactionHash", txCallback)
 
 
 # export functions to window

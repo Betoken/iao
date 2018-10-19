@@ -116,7 +116,7 @@
             </div>
             
             <!--IAO user flow-->
-            <div class="column" id="flow_start" style="margin-top: 1em;">
+            <div class="column" id="flow_start" style="display: inline-block; margin-top: 1em;">
                 <div class="ui segment">
                     <div class="ui fluid form success">
                         <div class="field">
@@ -191,7 +191,27 @@
                 </div>
             </div>
             
-            <div class="column" id="flow_broadcasted" style="display: none; margin-top: 1em;">
+            <div class="column" id="flow_ledger_confirm" style="display: none; margin-top: 1em;">
+                <div class="ui segment">
+                    <p><strong>Awaiting confirmation on your Ledger</strong></p>
+                    <p>
+                        Please confirm the transaction on your Ledger wallet.
+                    </p>
+                    If you're having problems, please make sure:
+                    <ul>
+                        <li>You are using Chrome or Brave on a desktop computer.</li>
+                        <li>Your Ledger is properly plugged in.</li>
+                        <li>You have logged into your Ledger.</li>
+                        <li>You have launched the Ethereum App on your Ledger.</li>
+                        <li>"Browser Support" has been enabled in the Ethereum App's settings.</li>
+                    </ul>
+                    <div class="ui active centered inline loader"></div>
+                    <div class="ui hidden divider"></div>
+                    <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/ledger-big.png" width="88" alt="ledger-logo"></p>
+                </div>
+            </div>
+
+            <div class="column" id="flow_submitted" style="margin-top: 1em;">
                 <div class="ui segment">
                     <p><strong>🎉 Transaction successfully submitted!</strong></p>
                     <p>
@@ -206,9 +226,9 @@
                         </p>
                         <div class="field">
                             <label>Invite link:</label>
-                            <input type="text" value="https://betoken.fund/iao/?ref=" id="invite_link" readonly>
+                            <input type="text" value="https://betoken.fund/iao/" id="invite_link" readonly>
                         </div>
-                        <a title="Share on Twitter" id="share_twitter"><i class="twitter icon"></i> SHARE ON TWITTER</a>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="I just became a fund manager @betokenfund, the first cryptocurrency fund managed by an open meritocracy ! Click the invite link below to become a fund manager like me and get a referral reward!" data-url="https://betoken.fund/iao/" data-via="betokenfund" data-hashtags="Betoken_IAO" data-related="betokenfund" data-dnt="true" data-show-count="false"     id="share_twitter">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
                         <p></p>
                         <a href="https://betoken.fund/betoken-ui" target="_blank">
                             <button class="ui primary fluid button">
@@ -218,8 +238,6 @@
                     </div>
                 </div>
             </div>
-
-            
         </div>
     </div>
     <!-- CTA footer -->

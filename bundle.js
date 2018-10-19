@@ -26063,24 +26063,30 @@ module.exports=[
   // HELPERS
 
   // loads web3 as a global variable
+  // returns success
   loadWeb3 = async function(useLedger) {
-    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, engine, error, iao_address, ledgerWalletSubProvider, networkId;
+    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, e, engine, error, iao_address, ledgerWalletSubProvider, networkId;
     if (useLedger) {
-      // Use ledger-wallet-provider to load web3
-      ProviderEngine = require("web3-provider-engine");
-      RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
-      LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
-      engine = new ProviderEngine;
-      window.web3 = new Web3(engine);
-      networkId = 1;
-      ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
-        return networkId;
-      }, "44'/60'/0'/0"));
-      engine.addProvider(ledgerWalletSubProvider);
-      engine.addProvider(new RpcSubprovider({
-        rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
-      }));
-      engine.start();
+      try {
+        // Use ledger-wallet-provider to load web3
+        ProviderEngine = require("web3-provider-engine");
+        RpcSubprovider = require("web3-provider-engine/subproviders/rpc");
+        LedgerWalletSubproviderFactory = (require("ledger-wallet-provider")).default;
+        engine = new ProviderEngine;
+        window.web3 = new Web3(engine);
+        networkId = 1;
+        ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
+          return networkId;
+        }, "44'/60'/0'/0"));
+        engine.addProvider(ledgerWalletSubProvider);
+        engine.addProvider(new RpcSubprovider({
+          rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
+        }));
+        engine.start();
+      } catch (error1) {
+        e = error1;
+        return false;
+      }
     } else {
       // Use Metamask/other dApp browsers to load web3
       // Modern dapp browsers...
@@ -26103,15 +26109,16 @@ module.exports=[
 
         // Non-dapp browsers...
         alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
+        return false;
       }
     }
     
     // set default account
     web3.eth.defaultAccount = ((await web3.eth.getAccounts()))[0];
-    console.log((await web3.eth.getAccounts()));
     // check iao address
     iao_address = (await ens.lookup(IAO_ENS_ADDRESS));
-    return IAO_ADDRESS = ((iao_address != null) && IAO_ADDRESS !== iao_address) ? iao_address : IAO_ADDRESS;
+    IAO_ADDRESS = ((iao_address != null) && IAO_ADDRESS !== iao_address) ? iao_address : IAO_ADDRESS;
+    return true;
   };
 
   // returns the IAO contract object
