@@ -79,7 +79,7 @@ $(document)
         if (e.currentTarget.id === 'metamask_btn') {
             window.loadWeb3(false).then(register);
         } else if (e.currentTarget.id === 'ledger_btn') {
-            window.loadWeb3(true, 'ropsten').then(register);
+            window.loadWeb3(true, 'mainnet').then(register);
         }
     });
 
