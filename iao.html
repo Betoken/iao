@@ -128,6 +128,9 @@
             dropdown.change((e) => {
                 updatePayAmount(e.target.value);
             });
+            $('.ui.accordion')
+              .accordion()
+            ;
         });
     </script>
 </head>
@@ -252,6 +255,16 @@
                         <div class="field">
                             <label>Send <span id="eth_price"></span> ETH directly to this ENS address</label>
                             <input type="text" name="" placeholder="iao.betokenfund.eth" value="iao.betokenfund.eth" readonly>
+                            <div class="ui accordion field">
+                              <div class="title">
+                                <i class="icon qrcode"></i>
+                                Show QR Code
+                              </div>
+                              <div class="content field">
+                                <label class="transition hidden">Scan it with your Mobile Wallet</label>
+                                <img class="powered-by" src="semantic/dist/themes/default/assets/images/qr-code-contract.png" width="128" alt="qr-code">
+                              </div>
+                            </div>
                         </div>
                     </div>
                 </div>
