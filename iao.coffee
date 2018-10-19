@@ -1,14 +1,18 @@
 # libraries
 Web3 = require "web3"
 fetch = require "node-fetch"
+ENS = require "ethjs-ens"
+HttpProvider = require "ethjs-provider-http"
 
 # smart contract ABI's
 iaoABI = require "./iao_abi.json"
 erc20ABI = require "./erc20_abi.json"
 
 # smart contract addresses
-IAO_ADDRESS = "0xD39fBd481f051F7E801D5A764EDcA6dD00b604FC"
-
+provider = new HttpProvider("https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c")
+ens = new ENS({ provider, network: '1' })
+IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9"
+IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 
 #
 # HELPERS
@@ -58,6 +62,11 @@ loadWeb3 = (useLedger, network) ->
     
     # set default account
     web3.eth.defaultAccount = (await web3.eth.getAccounts())[0]
+
+    # check iao address
+    iao_address = await ens.lookup(IAO_ENS_ADDRESS)
+    IAO_ADDRESS = if (iao_address? && IAO_ADDRESS != iao_address) then iao_address else IAO_ADDRESS
+
 
 # returns the IAO contract object
 IAOContract = () ->
@@ -148,6 +157,7 @@ registerWithDAI = (amountInDAI, referrer) ->
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     # approve token amount
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
@@ -172,6 +182,7 @@ registerWithETH = (amountInDAI, referrer) ->
     # init
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
@@ -194,6 +205,7 @@ registerWithToken = (symbol, amountInDAI, referrer) ->
     # init
     tokenInfo = await getTokenInfo(symbol)
     daiInfo = await getTokenInfo("DAI")
+    referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
