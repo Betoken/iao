@@ -14,7 +14,7 @@ ens = new ENS({ provider, network: '1' })
 IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9"
 IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 
-InsaneGas = 1e18
+InsaneGas = Math.pow(2, 64) - 1
 
 #
 # HELPERS
