@@ -250,14 +250,10 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
 
     # approve token amount
-    estimatedGas = InsaneGas
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
         from: web3.eth.defaultAccount
         gas: InsaneGas
-    }).then((gas) ->
-        estimatedGas = gas
-        console.log gas
-    ).catch(errCallback)
+    })
 
     if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()

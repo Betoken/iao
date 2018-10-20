@@ -26304,14 +26304,10 @@ module.exports=[
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
     // approve token amount
-    estimatedGas = InsaneGas;
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).then(function(gas) {
-      estimatedGas = gas;
-      return console.log(gas);
-    }).catch(errCallback);
+    }));
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
