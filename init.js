@@ -14,6 +14,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 };
 
 NO_WEB3_ERR = "You need a Web3-enabled browser, like Metamask, Brave, Status, and Cipher, in order to use \"Continue with Metamask\". Don't forget, you can always transfer Ether directly to iao.betokenfund.eth to participate in the IAO!";
+LEDGER_ERR = "We're having trouble connecting to your Ledger Wallet. Please make sure:\nYou are using Chrome or Brave on a desktop computer.\nYour Ledger is properly plugged in.\nYou have logged into your Ledger.\nYou have launched the Ethereum App on your Ledger.\n\"Browser Support\" has been enabled in the Ethereum App's settings.\n"
 TX_ERR = "It would seem that either you have already participated in the IAO, or something unexpected has happened."
 
 $(document)
@@ -134,11 +135,15 @@ $(document)
             });
         } else if (e.currentTarget.id === 'ledger_btn') {
             window.loadWeb3(true).then((success) => {
-                // transition to confirm page
-                setFlowStep('flow_ledger_confirm');
+                if (success) {
+                    // transition to confirm page
+                    setFlowStep('flow_ledger_confirm');
 
-                // register
-                register();
+                    // register
+                    register();
+                } else {
+                    showError()
+                }
             });
         }
     });

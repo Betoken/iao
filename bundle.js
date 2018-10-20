@@ -26114,7 +26114,6 @@ module.exports=[
         // Acccounts always exposed
 
         // Non-dapp browsers...
-        alert("Non-Ethereum browser detected. You should consider trying MetaMask!");
         return false;
       }
     }
