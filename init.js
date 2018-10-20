@@ -124,9 +124,9 @@ $(document)
         }
         // update tx count
         switch (symbol) {
-            case 'ETH':
+            case "ETH":
                 $('.tx_count').text('1')
-            case 'DAI':
+            case "DAI":
                 $('.tx_count').text('2')
             default:
                 $('.tx_count').text('2')
