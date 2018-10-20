@@ -83,8 +83,8 @@ $(document)
     });
 
     $('.continue').on('click', (e) => {
+        var symbol = $('#dropdown')[0].value;
         var register = () => {
-            var symbol = $('#dropdown')[0].value;
             var amountInDAI = window.payAmountInDAI;
             var referrer = getUrlParameter('ref');
             referrer = typeof(referrer) === 'undefined' ? '0x0000000000000000000000000000000000000000' : referrer;
@@ -115,10 +115,13 @@ $(document)
 
             switch (symbol) {
                 case 'ETH':
+                    $('.tx_count').text('1')
                     return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback);
                 case 'DAI':
+                    $('.tx_count').text('2')
                     return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback);
                 default:
+                    $('.tx_count').text('2')
                     return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
             }
         }
