@@ -114,9 +114,9 @@ $(document)
             };
 
             switch (symbol) {
-                case 'ETH':
+                case "ETH":
                     return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback);
-                case 'DAI':
+                case "DAI":
                     return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback);
                 default:
                     return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
