@@ -26226,10 +26226,13 @@ module.exports=[
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // approve token amount
-    estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
+    estimatedGas = InsaneGas;
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).catch(errCallback));
+    }).then(function(gas) {
+      return estimatedGas = gas;
+    }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
@@ -26239,10 +26242,13 @@ module.exports=[
       gas: estimatedGas
     });
     // register
-    estimatedGas = (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
+    estimatedGas = InsaneGas;
+    await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).catch(errCallback));
+    }).then(function(gas) {
+      return estimatedGas = gas;
+    }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
@@ -26264,11 +26270,14 @@ module.exports=[
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
     // register
-    estimatedGas = (await iaoContract.methods.registerWithETH(referrer).estimateGas({
+    estimatedGas = InsaneGas;
+    await iaoContract.methods.registerWithETH(referrer).estimateGas({
       from: web3.eth.defaultAccount,
       value: amountInWei,
       gas: InsaneGas
-    }).catch(errCallback));
+    }).then(function(gas) {
+      return estimatedGas = gas;
+    }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
@@ -26295,10 +26304,13 @@ module.exports=[
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
     // approve token amount
-    estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    estimatedGas = InsaneGas;
+    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).catch(errCallback));
+    }).then(function(gas) {
+      return estimatedGas = gas;
+    }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
@@ -26308,10 +26320,13 @@ module.exports=[
       gas: estimatedGas
     });
     // register
-    estimatedGas = (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
+    estimatedGas = InsaneGas;
+    await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).catch(errCallback));
+    }).then(function(gas) {
+      return estimatedGas = gas;
+    }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
