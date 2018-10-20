@@ -26230,7 +26230,7 @@ module.exports=[
         from: web3.eth.defaultAccount
       }));
     } catch (error1) {
-      estimatedGas = 21000;
+      estimatedGas = 0;
     }
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
       from: web3.eth.defaultAccount,
@@ -26242,7 +26242,7 @@ module.exports=[
         from: web3.eth.defaultAccount
       }));
     } catch (error1) {
-      estimatedGas = 21000;
+      estimatedGas = 0;
     }
     return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
       from: web3.eth.defaultAccount,
@@ -26267,7 +26267,7 @@ module.exports=[
         value: amountInWei
       }));
     } catch (error1) {
-      estimatedGas = 21000;
+      estimatedGas = 0;
     }
     return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
@@ -26296,7 +26296,7 @@ module.exports=[
         from: web3.eth.defaultAccount
       }));
     } catch (error1) {
-      estimatedGas = 21000;
+      estimatedGas = 0;
     }
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
       from: web3.eth.defaultAccount,
@@ -26308,7 +26308,7 @@ module.exports=[
         from: web3.eth.defaultAccount
       }));
     } catch (error1) {
-      estimatedGas = 21000;
+      estimatedGas = 0;
     }
     return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
       from: web3.eth.defaultAccount,

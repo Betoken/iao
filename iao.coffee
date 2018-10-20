@@ -175,7 +175,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback) ->
             from: web3.eth.defaultAccount
         })
     catch
-        estimatedGas = 21000
+        estimatedGas = 0
 
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
         from: web3.eth.defaultAccount
@@ -188,7 +188,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback) ->
             from: web3.eth.defaultAccount
         })
     catch
-        estimatedGas = 21000
+        estimatedGas = 0
 
     await iaoContract.methods.registerWithDAI(
         amountInWei, referrer).send({
@@ -215,7 +215,7 @@ registerWithETH = (amountInDAI, referrer, txCallback) ->
             value: amountInWei
         })
     catch
-        estimatedGas = 21000
+        estimatedGas = 0
     await iaoContract.methods.registerWithETH(referrer).send(
         {
             from: web3.eth.defaultAccount
@@ -246,7 +246,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback) ->
             from: web3.eth.defaultAccount
         })
     catch
-        estimatedGas = 21000
+        estimatedGas = 0
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
         .send(
             {
@@ -263,7 +263,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback) ->
                 from: web3.eth.defaultAccount
             })
     catch
-        estimatedGas = 21000
+        estimatedGas = 0
     await iaoContract.methods.registerWithToken(
         tokenInfo.contractAddress,
         amountInTokenUnits,
