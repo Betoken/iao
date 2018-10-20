@@ -13,6 +13,9 @@ var getUrlParameter = function getUrlParameter(sParam) {
     }
 };
 
+NO_WEB3_ERR = "You need a Web3-enabled browser, like Metamask, Brave, Status, and Cipher, in order to use \"Continue with Metamask\". Don't forget, you can always transfer Ether directly to iao.betokenfund.eth to participate in the IAO!";
+TX_ERR = "It would seem that either you have already participated in the IAO, or something unexpected has happened."
+
 $(document)
 .ready(() => {
     // init
@@ -47,15 +50,15 @@ $(document)
         });
     };
     var setFlowStep = (stepId) => {
-        var steps = ['flow_start', 'flow_metamask_confirm', 'flow_ledger_confirm', 'flow_submitted'];
+        var steps = ['flow_start', 'flow_metamask_confirm', 'flow_ledger_confirm', 'flow_submitted', 'flow_error'];
         for (var i in steps) {
             $(`#${steps[i]}`).css({'display': 'none'});
         }
         $(`#${stepId}`).css({'display': 'inline-block'});
     };
     var showError = (msg) => {
-        alert(msg);
-        //TODO
+        $('#error_msg').text(msg);
+        setFlowStep('flow_error');
     };
 
 
@@ -104,7 +107,7 @@ $(document)
                 setFlowStep('flow_submitted');
             };
             var errCallback = (err) => {
-                showError("It seems either you have joined the IAO before, or some unexpected error occured.");
+                showError(TX_ERR);
             };
 
             switch (symbol) {
@@ -116,6 +119,7 @@ $(document)
                     return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
             }
         }
+        // load web3
         if (e.currentTarget.id === 'metamask_btn') {
             window.loadWeb3(false).then((success) => {
                 if (success) {
@@ -124,6 +128,8 @@ $(document)
 
                     // register
                     register();
+                } else {
+                    showError(NO_WEB3_ERR);
                 }
             });
         } else if (e.currentTarget.id === 'ledger_btn') {

@@ -67,7 +67,6 @@ loadWeb3 = (useLedger) ->
         
         # Non-dapp browsers...
         else
-            alert("Non-Ethereum browser detected. You should consider trying MetaMask!")
             return false
     
     # set default account
@@ -225,13 +224,11 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
         errCallback()
         return
 
-    await iaoContract.methods.registerWithETH(referrer).send(
-        {
+    await iaoContract.methods.registerWithETH(referrer).send({
             from: web3.eth.defaultAccount
             gas: estimatedGas
             value: amountInWei
-        }
-    ).on("transactionHash", txCallback)
+        }).on("transactionHash", txCallback)
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
 registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
@@ -260,12 +257,10 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
         return
 
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
-        .send(
-            {
-                from: web3.eth.defaultAccount
-                gas: estimatedGas
-            }
-    )
+        .send({
+            from: web3.eth.defaultAccount
+            gas: estimatedGas
+        })
 
     # register
     estimatedGas = await iaoContract.methods.registerWithToken(tokenInfo.contractAddress,
