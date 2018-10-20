@@ -172,7 +172,12 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
         from: web3.eth.defaultAccount
+        gas: Infinity
     }).catch(errCallback)
+
+    if estimatedGas == Infinity
+        errCallback()
+        return
 
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
         from: web3.eth.defaultAccount
@@ -182,7 +187,12 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
     # register
     estimatedGas = await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
         from: web3.eth.defaultAccount
+        gas: Infinity
     }).catch(errCallback)
+
+    if estimatedGas == Infinity
+        errCallback()
+        return
 
     await iaoContract.methods.registerWithDAI(
         amountInWei, referrer).send({
@@ -206,7 +216,12 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
     estimatedGas = await iaoContract.methods.registerWithETH(referrer).estimateGas({
         from: web3.eth.defaultAccount
         value: amountInWei
+        gas: Infinity
     }).catch(errCallback)
+
+    if estimatedGas == Infinity
+        errCallback()
+        return
 
     await iaoContract.methods.registerWithETH(referrer).send(
         {
@@ -235,7 +250,12 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
         from: web3.eth.defaultAccount
+        gas: Infinity
     }).catch(errCallback)
+
+    if estimatedGas == Infinity
+        errCallback()
+        return
 
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
         .send(
@@ -250,7 +270,12 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
         amountInTokenUnits,
         referrer).estimateGas({
             from: web3.eth.defaultAccount
+            gas: Infinity
         }).catch(errCallback)
+
+    if estimatedGas == Infinity
+        errCallback()
+        return
 
     await iaoContract.methods.registerWithToken(
         tokenInfo.contractAddress,

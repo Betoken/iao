@@ -26226,16 +26226,26 @@ module.exports=[
     referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // approve token amount
     estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: 2e308
     }).catch(errCallback));
+    if (estimatedGas === 2e308) {
+      errCallback();
+      return;
+    }
     await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
       from: web3.eth.defaultAccount,
       gas: estimatedGas
     });
     // register
     estimatedGas = (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: 2e308
     }).catch(errCallback));
+    if (estimatedGas === 2e308) {
+      errCallback();
+      return;
+    }
     return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
       from: web3.eth.defaultAccount,
       gas: estimatedGas
@@ -26255,8 +26265,13 @@ module.exports=[
     // register
     estimatedGas = (await iaoContract.methods.registerWithETH(referrer).estimateGas({
       from: web3.eth.defaultAccount,
-      value: amountInWei
+      value: amountInWei,
+      gas: 2e308
     }).catch(errCallback));
+    if (estimatedGas === 2e308) {
+      errCallback();
+      return;
+    }
     return (await iaoContract.methods.registerWithETH(referrer).send({
       from: web3.eth.defaultAccount,
       gas: estimatedGas,
@@ -26280,16 +26295,26 @@ module.exports=[
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
     // approve token amount
     estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: 2e308
     }).catch(errCallback));
+    if (estimatedGas === 2e308) {
+      errCallback();
+      return;
+    }
     await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
       from: web3.eth.defaultAccount,
       gas: estimatedGas
     });
     // register
     estimatedGas = (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
-      from: web3.eth.defaultAccount
+      from: web3.eth.defaultAccount,
+      gas: 2e308
     }).catch(errCallback));
+    if (estimatedGas === 2e308) {
+      errCallback();
+      return;
+    }
     return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
       from: web3.eth.defaultAccount,
       gas: estimatedGas
