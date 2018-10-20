@@ -38,8 +38,7 @@ loadWeb3 = (useLedger) ->
                 () -> networkId,
                 "44'/60'/0'/0"
             )
-            supported = await ledgerWalletSubProvider.isSupported()
-            if !supported
+            if !ledgerWalletSubProvider.isSupported
                 return false
             engine.addProvider ledgerWalletSubProvider
             engine.addProvider new RpcSubprovider {

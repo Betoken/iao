@@ -26067,7 +26067,7 @@ module.exports=[
   // loads web3 as a global variable
   // returns success
   loadWeb3 = async function(useLedger) {
-    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, e, engine, error, iao_address, ledgerWalletSubProvider, networkId, supported;
+    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, e, engine, error, iao_address, ledgerWalletSubProvider, networkId;
     if (useLedger) {
       try {
         // Use ledger-wallet-provider to load web3
@@ -26080,8 +26080,7 @@ module.exports=[
         ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
           return networkId;
         }, "44'/60'/0'/0"));
-        supported = (await ledgerWalletSubProvider.isSupported());
-        if (!supported) {
+        if (!ledgerWalletSubProvider.isSupported) {
           return false;
         }
         engine.addProvider(ledgerWalletSubProvider);
