@@ -26309,7 +26309,8 @@ module.exports=[
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).then(function(gas) {
-      return estimatedGas = gas;
+      estimatedGas = gas;
+      return console.log(gas);
     }).catch(errCallback);
     if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();

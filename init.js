@@ -29,6 +29,7 @@ $(document)
             $('.continue').addClass('disabled');
         }
     });
+    $('.ui.checkbox').checkbox('set unchecked')
     if (typeof(getUrlParameter('ref')) != 'undefined') {
         $('#referred_msg').show();
     }
