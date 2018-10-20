@@ -28,6 +28,7 @@ $(document)
     if (typeof(getUrlParameter('ref')) != 'undefined') {
         $('#referred_msg').show();
     }
+    $('.address_display').val(window.IAO_ADDRESS); // display address
 
     // helpers
     var updatePayAmount = (symbol) => {
@@ -78,7 +79,21 @@ $(document)
             var txCallback = (txHash) => {
                 $('#tx_link').attr('href', `https://etherscan.io/tx/${txHash}`);
                 $('#invite_link').val(`https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`);
-                $('#share_twitter').attr('data-url', `https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`);
+
+                // change twitter button url
+
+                $('#share_twitter').empty()
+                // create a clone of the twitter share button template
+                var clone = $('.twitter-share-button-template').clone()
+                // fix up our clone
+                clone.removeAttr("style"); // unhide the clone
+                clone.attr("data-url", `https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`); 
+                clone.attr("class", "twitter-share-button"); 
+                // copy cloned button into div that we can clear later
+                $('#share_twitter').append(clone);
+                // reload twitter scripts to force them to run, converting a to iframe
+                $.getScript("http://platform.twitter.com/widgets.js");
+
                 setFlowStep('flow_submitted');
             };
             switch (symbol) {
@@ -94,7 +109,6 @@ $(document)
             window.loadWeb3(false).then((success) => {
                 if (success) {
                     // transition to confirm page
-                    $('.address_display').val(window.IAO_ADDRESS); // display address
                     setFlowStep('flow_metamask_confirm');
 
                     // register

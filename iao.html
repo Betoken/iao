@@ -205,9 +205,14 @@
                         <li>You have launched the Ethereum App on your Ledger.</li>
                         <li>"Browser Support" has been enabled in the Ethereum App's settings.</li>
                     </ul>
-                    <div class="ui active centered inline loader"></div>
-                    <div class="ui hidden divider"></div>
-                    <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/ledger-big.png" width="88" alt="ledger-logo"></p>
+                    <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/ledger-big.png" width="48" alt="ledger-logo"></p>
+                    
+                    <div class="ui fluid form success">
+                        <div class="field">
+                            <label>Please verify the receipient address is the following:</label>
+                            <input type="text" class="address_display" readonly>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -228,7 +233,9 @@
                             <label>Invite link:</label>
                             <input type="text" value="https://betoken.fund/iao/" id="invite_link" readonly>
                         </div>
-                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-size="large" data-text="I just became a fund manager @betokenfund, the first cryptocurrency fund managed by an open meritocracy ! Click the invite link below to become a fund manager like me and get a referral reward!" data-url="https://betoken.fund/iao/" data-via="betokenfund" data-hashtags="Betoken_IAO" data-related="betokenfund" data-dnt="true" data-show-count="false"     id="share_twitter">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+                        <div id="share_twitter"></div>
+                        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button-template" data-size="large" data-text="I just became a fund manager @betokenfund, the first cryptocurrency fund managed by an open meritocracy ! Click the invite link below to become a fund manager like me and get a referral reward!" data-url="https://betoken.fund/iao/" data-via="betokenfund" data-hashtags="Betoken_IAO" data-related="betokenfund" data-dnt="true" data-show-count="false" style="display: none;">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
                         <p></p>
                         <a href="https://betoken.fund/betoken-ui" target="_blank">
                             <button class="ui primary fluid button">
