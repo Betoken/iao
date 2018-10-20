@@ -115,15 +115,21 @@ $(document)
 
             switch (symbol) {
                 case 'ETH':
-                    $('.tx_count').text('1')
                     return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback);
                 case 'DAI':
-                    $('.tx_count').text('2')
                     return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback);
                 default:
-                    $('.tx_count').text('2')
                     return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
             }
+        }
+        // update tx count
+        switch (symbol) {
+            case 'ETH':
+                $('.tx_count').text('1')
+            case 'DAI':
+                $('.tx_count').text('2')
+            default:
+                $('.tx_count').text('2')
         }
         // load web3
         if (e.currentTarget.id === 'metamask_btn') {
