@@ -26218,7 +26218,7 @@ module.exports=[
 
   // register with DAI. amountInDAI should be in DAI (not wei).
   registerWithDAI = async function(amountInDAI, referrer, txCallback, errCallback) {
-    var amountInWei, estimatedGas, iaoContract, tokenContract, tokenInfo;
+    var amountInWei, iaoContract, tokenContract, tokenInfo;
     // init
     amountInWei = amountInDAI * 1e18;
     tokenInfo = (await getTokenInfo("DAI"));
@@ -26226,42 +26226,38 @@ module.exports=[
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
     referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // approve token amount
-    estimatedGas = InsaneGas;
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
+    return (await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }).then(function(gas) {
-      return estimatedGas = gas;
-    }).catch(errCallback);
-    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
-      errCallback();
-      return;
-    }
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
-      from: web3.eth.defaultAccount,
-      gas: estimatedGas
-    });
-    // register
-    estimatedGas = InsaneGas;
-    await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
-      from: web3.eth.defaultAccount,
-      gas: InsaneGas
-    }).then(function(gas) {
-      return estimatedGas = gas;
-    }).catch(errCallback);
-    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
-      errCallback();
-      return;
-    }
-    return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
-      from: web3.eth.defaultAccount,
-      gas: estimatedGas
-    }).on("transactionHash", txCallback));
+    }).then(async function(estimatedGas) {
+      if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+        errCallback();
+        return;
+      }
+      await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
+        from: web3.eth.defaultAccount,
+        gas: estimatedGas
+      });
+      // register
+      return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
+        from: web3.eth.defaultAccount,
+        gas: InsaneGas
+      }).then(async function(estimatedGas) {
+        if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+          errCallback();
+          return;
+        }
+        return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
+          from: web3.eth.defaultAccount,
+          gas: estimatedGas
+        }).on("transactionHash", txCallback));
+      }).catch(errCallback));
+    }).catch(errCallback));
   };
 
   // register with ETH. amountInDAI should be in DAI (not wei).
   registerWithETH = async function(amountInDAI, referrer, txCallback, errCallback) {
-    var amountInWei, estimatedGas, ethPerDAI, iaoContract, tokenInfo;
+    var amountInWei, ethPerDAI, iaoContract, tokenInfo;
     // init
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
@@ -26270,28 +26266,26 @@ module.exports=[
     ethPerDAI = tokenInfo.currentPrice;
     amountInWei = amountInDAI * ethPerDAI * 1e18;
     // register
-    estimatedGas = InsaneGas;
-    await iaoContract.methods.registerWithETH(referrer).estimateGas({
+    return (await iaoContract.methods.registerWithETH(referrer).estimateGas({
       from: web3.eth.defaultAccount,
       value: amountInWei,
       gas: InsaneGas
-    }).then(function(gas) {
-      return estimatedGas = gas;
-    }).catch(errCallback);
-    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
-      errCallback();
-      return;
-    }
-    return (await iaoContract.methods.registerWithETH(referrer).send({
-      from: web3.eth.defaultAccount,
-      gas: estimatedGas,
-      value: amountInWei
-    }).on("transactionHash", txCallback));
+    }).then(async function(estimatedGas) {
+      if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+        errCallback();
+        return;
+      }
+      return (await iaoContract.methods.registerWithETH(referrer).send({
+        from: web3.eth.defaultAccount,
+        gas: estimatedGas,
+        value: amountInWei
+      }).on("transactionHash", txCallback));
+    }).catch(errCallback));
   };
 
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
   registerWithToken = async function(symbol, amountInDAI, referrer, txCallback, errCallback) {
-    var amountInTokenUnits, daiInfo, estimatedGas, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
+    var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
     // init
     tokenInfo = (await getTokenInfo(symbol));
     daiInfo = (await getTokenInfo("DAI"));
@@ -26304,34 +26298,33 @@ module.exports=[
     tokenPerDAI = ethPerDAI / ethPerToken;
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
     // approve token amount
-    estimatedGas = (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    return (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
-    }));
-    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
-      errCallback();
-      return;
-    }
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
-      from: web3.eth.defaultAccount,
-      gas: estimatedGas
-    });
-    // register
-    estimatedGas = InsaneGas;
-    await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
-      from: web3.eth.defaultAccount,
-      gas: InsaneGas
-    }).then(function(gas) {
-      return estimatedGas = gas;
-    }).catch(errCallback);
-    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
-      errCallback();
-      return;
-    }
-    return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
-      from: web3.eth.defaultAccount,
-      gas: estimatedGas
-    }).on("transactionHash", txCallback));
+    }).then(async function(estimatedGas) {
+      if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+        errCallback();
+        return;
+      }
+      await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
+        from: web3.eth.defaultAccount,
+        gas: estimatedGas
+      });
+      // register
+      return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
+        from: web3.eth.defaultAccount,
+        gas: InsaneGas
+      }).then(async function(estimatedGas) {
+        if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+          errCallback();
+          return;
+        }
+        return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
+          from: web3.eth.defaultAccount,
+          gas: estimatedGas
+        }).on("transactionHash", txCallback));
+      }).catch(errCallback));
+    }).catch(errCallback));
   };
 
   // export functions to window
