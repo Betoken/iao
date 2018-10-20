@@ -139,11 +139,10 @@ $(document)
                 }
             });
         } else if (e.currentTarget.id === 'ledger_btn') {
+            // transition to confirm page
+            setFlowStep('flow_ledger_confirm');
             window.loadWeb3(true).then((success) => {
                 if (success) {
-                    // transition to confirm page
-                    setFlowStep('flow_ledger_confirm');
-
                     // register
                     register();
                 } else {
