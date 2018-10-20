@@ -176,7 +176,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
         gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == InsaneGas
+    if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()
         return
 
@@ -191,7 +191,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
         gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == InsaneGas
+    if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()
         return
 
@@ -220,7 +220,7 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
         gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == InsaneGas
+    if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()
         return
 
@@ -252,7 +252,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
         gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == InsaneGas
+    if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()
         return
 
@@ -270,7 +270,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
             gas: InsaneGas
         }).catch(errCallback)
 
-    if estimatedGas == InsaneGas
+    if estimatedGas == InsaneGas || !(estimatedGas?)
         errCallback()
         return
 

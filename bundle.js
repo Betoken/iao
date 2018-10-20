@@ -26230,7 +26230,7 @@ module.exports=[
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).catch(errCallback));
-    if (estimatedGas === InsaneGas) {
+    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
     }
@@ -26243,7 +26243,7 @@ module.exports=[
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).catch(errCallback));
-    if (estimatedGas === InsaneGas) {
+    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
     }
@@ -26269,7 +26269,7 @@ module.exports=[
       value: amountInWei,
       gas: InsaneGas
     }).catch(errCallback));
-    if (estimatedGas === InsaneGas) {
+    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
     }
@@ -26299,7 +26299,7 @@ module.exports=[
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).catch(errCallback));
-    if (estimatedGas === InsaneGas) {
+    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
     }
@@ -26312,7 +26312,7 @@ module.exports=[
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).catch(errCallback));
-    if (estimatedGas === InsaneGas) {
+    if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
       errCallback();
       return;
     }
