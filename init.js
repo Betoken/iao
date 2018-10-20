@@ -30,6 +30,7 @@ $(document)
     }
     $('.address_display').val(window.IAO_ADDRESS); // display address
 
+
     // helpers
     var updatePayAmount = (symbol) => {
         $('#pay_token_amount').text('loading...');
@@ -52,11 +53,17 @@ $(document)
         }
         $(`#${stepId}`).css({'display': 'inline-block'});
     };
+    var showError = (msg) => {
+        alert(msg);
+        //TODO
+    };
+
 
     // load the initial price in ETH
     updateETHPrice().then((price) => {
         $('#pay_token_amount').text(`${price} ETH`);
     });
+
 
     // button events
     $('.kro_btn').on('click', (e) => {
@@ -112,7 +119,10 @@ $(document)
                     setFlowStep('flow_metamask_confirm');
 
                     // register
-                    register();
+                    var success = register();
+                    if (!success) {
+                        showError("It seems either you have joined the IAO before, or some unexpected error occured.");
+                    }
                 }
             });
         } else if (e.currentTarget.id === 'ledger_btn') {
@@ -121,10 +131,14 @@ $(document)
                 setFlowStep('flow_ledger_confirm');
 
                 // register
-                register();
+                var success = register();
+                if (!success) {
+                    showError("It seems either you have joined the IAO before, or some unexpected error occured.");
+                }
             });
         }
     });
+
 
     // load token dropdown
     var dropdown = $('#dropdown');
@@ -139,6 +153,7 @@ $(document)
     dropdown.change((e) => {
         updatePayAmount(e.target.value);
     });
+
 
     $('.ui.accordion')
         .accordion()
