@@ -170,6 +170,9 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
     referrer = if web3.utils.isAddress(referrer) then referrer else "0x0000000000000000000000000000000000000000"
 
+    # convert input to BN
+    amountInWei = ethers.utils.bigNumberify(amountInWei)
+
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
         from: web3.eth.defaultAccount
@@ -245,6 +248,9 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
     amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
+
+    # convert input to BN
+    amountInTokenUnits = ethers.utils.bigNumberify(amountInTokenUnits)
 
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
