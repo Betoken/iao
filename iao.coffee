@@ -14,6 +14,8 @@ ens = new ENS({ provider, network: '1' })
 IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9"
 IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 
+InsaneGas = 1e88
+
 #
 # HELPERS
 #
@@ -172,10 +174,10 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).estimateGas({
         from: web3.eth.defaultAccount
-        gas: Infinity
+        gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == Infinity
+    if estimatedGas == InsaneGas
         errCallback()
         return
 
@@ -187,10 +189,10 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
     # register
     estimatedGas = await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
         from: web3.eth.defaultAccount
-        gas: Infinity
+        gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == Infinity
+    if estimatedGas == InsaneGas
         errCallback()
         return
 
@@ -216,10 +218,10 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
     estimatedGas = await iaoContract.methods.registerWithETH(referrer).estimateGas({
         from: web3.eth.defaultAccount
         value: amountInWei
-        gas: Infinity
+        gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == Infinity
+    if estimatedGas == InsaneGas
         errCallback()
         return
 
@@ -250,10 +252,10 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
     # approve token amount
     estimatedGas = await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
         from: web3.eth.defaultAccount
-        gas: Infinity
+        gas: InsaneGas
     }).catch(errCallback)
 
-    if estimatedGas == Infinity
+    if estimatedGas == InsaneGas
         errCallback()
         return
 
@@ -270,10 +272,10 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
         amountInTokenUnits,
         referrer).estimateGas({
             from: web3.eth.defaultAccount
-            gas: Infinity
+            gas: InsaneGas
         }).catch(errCallback)
 
-    if estimatedGas == Infinity
+    if estimatedGas == InsaneGas
         errCallback()
         return
 
