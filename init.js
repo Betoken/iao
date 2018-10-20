@@ -117,15 +117,11 @@ $(document)
             });
         } else if (e.currentTarget.id === 'ledger_btn') {
             window.loadWeb3(true).then((success) => {
-                if (success) {
-                    // transition to confirm page
-                    setFlowStep('flow_ledger_confirm');
+                // transition to confirm page
+                setFlowStep('flow_ledger_confirm');
 
-                    // register
-                    register();
-                } else {
-                    alert("Your browser doesn't support Ledger. Please switch to Chrome or Brave on a desktop computer.");
-                }
+                // register
+                register();
             });
         }
     });
