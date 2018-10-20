@@ -103,6 +103,10 @@ $(document)
 
                 setFlowStep('flow_submitted');
             };
+            var errCallback = (err) => {
+                showError("It seems either you have joined the IAO before, or some unexpected error occured.");
+            };
+
             switch (symbol) {
                 case 'ETH':
                     return window.registerWithETH(amountInDAI, referrer, txCallback);
@@ -119,10 +123,7 @@ $(document)
                     setFlowStep('flow_metamask_confirm');
 
                     // register
-                    var success = register();
-                    if (!success) {
-                        showError("It seems either you have joined the IAO before, or some unexpected error occured.");
-                    }
+                    register();
                 }
             });
         } else if (e.currentTarget.id === 'ledger_btn') {
@@ -131,10 +132,7 @@ $(document)
                 setFlowStep('flow_ledger_confirm');
 
                 // register
-                var success = register();
-                if (!success) {
-                    showError("It seems either you have joined the IAO before, or some unexpected error occured.");
-                }
+                register();
             });
         }
     });
