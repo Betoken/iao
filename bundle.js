@@ -26212,7 +26212,7 @@ module.exports=[
   // REGISTRATION
 
   // register with DAI. amountInDAI should be in DAI (not wei).
-  registerWithDAI = async function(amountInDAI, referrer) {
+  registerWithDAI = async function(amountInDAI, referrer, txCallback) {
     var amountInWei, iaoContract, tokenContract, tokenInfo;
     // init
     amountInWei = amountInDAI * 1e18;
@@ -26233,11 +26233,11 @@ module.exports=[
       gas: (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
         from: web3.eth.defaultAccount
       }))
-    }));
+    }).on("transactionHash", txCallback));
   };
 
   // register with ETH. amountInDAI should be in DAI (not wei).
-  registerWithETH = async function(amountInDAI, referrer) {
+  registerWithETH = async function(amountInDAI, referrer, txCallback) {
     var amountInWei, ethPerDAI, iaoContract, tokenInfo;
     // init
     tokenInfo = (await getTokenInfo("DAI"));
@@ -26254,11 +26254,11 @@ module.exports=[
         value: amountInWei
       })),
       value: amountInWei
-    }));
+    }).on("transactionHash", txCallback));
   };
 
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
-  registerWithToken = async function(symbol, amountInDAI, referrer) {
+  registerWithToken = async function(symbol, amountInDAI, referrer, txCallback) {
     var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
     // init
     tokenInfo = (await getTokenInfo(symbol));
@@ -26284,7 +26284,7 @@ module.exports=[
       gas: (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
         from: web3.eth.defaultAccount
       }))
-    }));
+    }).on("transactionHash", txCallback));
   };
 
   // export functions to window
