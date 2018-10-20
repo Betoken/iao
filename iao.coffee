@@ -36,6 +36,9 @@ loadWeb3 = (useLedger) ->
                 () -> networkId,
                 "44'/60'/0'/0"
             )
+            supported = await ledgerWalletSubProvider.isSupported()
+            if !supported
+                return false
             engine.addProvider ledgerWalletSubProvider
             engine.addProvider new RpcSubprovider {
                 rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"

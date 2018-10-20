@@ -26065,7 +26065,7 @@ module.exports=[
   // loads web3 as a global variable
   // returns success
   loadWeb3 = async function(useLedger) {
-    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, e, engine, error, iao_address, ledgerWalletSubProvider, networkId;
+    var LedgerWalletSubproviderFactory, ProviderEngine, RpcSubprovider, e, engine, error, iao_address, ledgerWalletSubProvider, networkId, supported;
     if (useLedger) {
       try {
         // Use ledger-wallet-provider to load web3
@@ -26078,6 +26078,10 @@ module.exports=[
         ledgerWalletSubProvider = (await LedgerWalletSubproviderFactory(function() {
           return networkId;
         }, "44'/60'/0'/0"));
+        supported = (await ledgerWalletSubProvider.isSupported());
+        if (!supported) {
+          return false;
+        }
         engine.addProvider(ledgerWalletSubProvider);
         engine.addProvider(new RpcSubprovider({
           rpcUrl: "https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c"
