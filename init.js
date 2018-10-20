@@ -109,11 +109,11 @@ $(document)
 
             switch (symbol) {
                 case 'ETH':
-                    return window.registerWithETH(amountInDAI, referrer, txCallback);
+                    return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback);
                 case 'DAI':
-                    return window.registerWithDAI(amountInDAI, referrer, txCallback);
+                    return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback);
                 default:
-                    return window.registerWithToken(symbol, amountInDAI, referrer, txCallback);
+                    return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
             }
         }
         if (e.currentTarget.id === 'metamask_btn') {
