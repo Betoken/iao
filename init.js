@@ -109,6 +109,7 @@ $(document)
                 setFlowStep('flow_submitted');
             };
             var errCallback = (err) => {
+                console.log(err);
                 showError(TX_ERR);
             };
 
