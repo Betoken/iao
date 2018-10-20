@@ -15,7 +15,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 
 NO_WEB3_ERR = "You need a Web3-enabled browser, like Metamask, Brave, Status, and Cipher, in order to use \"Continue with Metamask\". Don't forget, you can always transfer Ether directly to iao.betokenfund.eth to participate in the IAO!";
 LEDGER_ERR = "We're having trouble connecting to your Ledger Wallet. Please make sure:\n• You are using Chrome or Brave on a desktop computer.\n• Your Ledger is properly plugged in.\n• You have logged into your Ledger.\n• You have launched the Ethereum App on your Ledger.\n• \"Browser Support\" has been enabled in the Ethereum App's settings.\n"
-TX_ERR = "It would seem that either you have already participated in the IAO, or something unexpected has happened."
+TX_ERR = "It would seem that either you have already participated in the IAO, or something unexpected has happened. Please reject all transactions you see right now."
 
 $(document)
 .ready(() => {
