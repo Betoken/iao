@@ -26059,7 +26059,7 @@ module.exports=[
 
   IAO_ENS_ADDRESS = "iao.betokenfund.eth";
 
-  InsaneGas = Number.MAX_VALUE;
+  InsaneGas = Math.pow(10, 20);
 
   
   // HELPERS
