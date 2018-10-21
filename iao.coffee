@@ -3,6 +3,7 @@ Web3 = require "web3"
 fetch = require "node-fetch"
 ENS = require "ethjs-ens"
 HttpProvider = require "ethjs-provider-http"
+BigNumber = require "bignumber.js"
 
 # smart contract ABI's
 iaoABI = require "./iao_abi.json"
@@ -248,7 +249,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, con
     ethPerToken = tokenInfo.currentPrice
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
-    amountInTokenUnits = web3.utils.toBN(web3.utils.numberToHex(Math.floor(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals))))
+    amountInTokenUnits = BigNumber(Math.floor(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)))
 
     # set allowance to 0
     await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
