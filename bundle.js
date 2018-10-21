@@ -26299,7 +26299,7 @@ module.exports=[
     ethPerToken = tokenInfo.currentPrice;
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
-    amountInTokenUnits = Math.floor(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals));
+    amountInTokenUnits = web3.utils.toBN(Math.floor(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)));
     // set allowance to 0
     return (await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
       from: web3.eth.defaultAccount,
