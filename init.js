@@ -52,7 +52,7 @@ $(document)
         });
     };
     var setFlowStep = (stepId) => {
-        var steps = ['flow_start', 'flow_metamask_confirm', 'flow_ledger_confirm', 'flow_submitted', 'flow_error'];
+        var steps = ['flow_start', 'flow_metamask_confirm', 'flow_ledger_confirm', 'flow_submitted', 'flow_confirmed', 'flow_error'];
         for (var i in steps) {
             $(`#${steps[i]}`).css({'display': 'none'});
         }
@@ -90,22 +90,9 @@ $(document)
             var referrer = getUrlParameter('ref');
             referrer = typeof(referrer) === 'undefined' ? '0x0000000000000000000000000000000000000000' : referrer;
             var txCallback = (txHash) => {
-                $('#tx_link').attr('href', `https://etherscan.io/tx/${txHash}`);
-                $('#invite_link').val(`https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`);
-
-                // change twitter button url
-
-                $('#share_twitter').empty()
-                // create a clone of the twitter share button template
-                var clone = $('.twitter-share-button-template').clone()
-                // fix up our clone
-                clone.removeAttr("style"); // unhide the clone
-                clone.attr("data-url", `https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`); 
-                clone.attr("class", "twitter-share-button"); 
-                // copy cloned button into div that we can clear later
-                $('#share_twitter').append(clone);
-                // reload twitter scripts to force them to run, converting a to iframe
-                $.getScript("https://platform.twitter.com/widgets.js");
+                $('.tx_link').attr('href', `https://etherscan.io/tx/${txHash}`);
+                $('.invite_link').val(`https://betoken.fund/iao/?ref=${window.web3.eth.defaultAccount}`);
+                $('.share_twitter').attr('href', $('.share_twitter').attr('href') + window.web3.eth.defaultAccount);
 
                 setFlowStep('flow_submitted');
                 hasSubmitted = true;
@@ -116,14 +103,17 @@ $(document)
                     showError(TX_ERR);
                 }
             };
+            var confirmCallback = () => {
+                setFlowStep('flow_confirmed')
+            };
 
             switch (symbol) {
                 case 'ETH':
-                    return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback);
+                    return window.registerWithETH(amountInDAI, referrer, txCallback, errCallback, confirmCallback);
                 case 'DAI':
-                    return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback);
+                    return window.registerWithDAI(amountInDAI, referrer, txCallback, errCallback, confirmCallback);
                 default:
-                    return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback);
+                    return window.registerWithToken(symbol, amountInDAI, referrer, txCallback, errCallback, confirmCallback);
             }
         }
         // update tx count

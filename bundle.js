@@ -26216,7 +26216,7 @@ module.exports=[
   // REGISTRATION
 
   // register with DAI. amountInDAI should be in DAI (not wei).
-  registerWithDAI = async function(amountInDAI, referrer, txCallback, errCallback) {
+  registerWithDAI = async function(amountInDAI, referrer, txCallback, errCallback, confirmCallback) {
     var amountInWei, iaoContract, tokenContract, tokenInfo;
     // init
     amountInWei = amountInDAI * 1e18;
@@ -26249,13 +26249,13 @@ module.exports=[
         return iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
           from: web3.eth.defaultAccount,
           gas: Math.ceil(estimatedGas * 1.1)
-        }).on("transactionHash", txCallback);
+        }).on("transactionHash", txCallback).on('receipt', confirmCallback);
       }).catch(errCallback));
     }).catch(errCallback));
   };
 
   // register with ETH. amountInDAI should be in DAI (not wei).
-  registerWithETH = async function(amountInDAI, referrer, txCallback, errCallback) {
+  registerWithETH = async function(amountInDAI, referrer, txCallback, errCallback, confirmCallback) {
     var amountInWei, ethPerDAI, iaoContract, tokenInfo;
     // init
     tokenInfo = (await getTokenInfo("DAI"));
@@ -26278,12 +26278,12 @@ module.exports=[
         from: web3.eth.defaultAccount,
         gas: Math.ceil(estimatedGas * 1.1),
         value: amountInWei
-      }).on("transactionHash", txCallback));
+      }).on("transactionHash", txCallback).on('receipt', confirmCallback));
     }).catch(errCallback));
   };
 
   // register with an ERC20 token. amountInDAI should be in DAI (not wei).
-  registerWithToken = async function(symbol, amountInDAI, referrer, txCallback, errCallback) {
+  registerWithToken = async function(symbol, amountInDAI, referrer, txCallback, errCallback, confirmCallback) {
     var amountInTokenUnits, daiInfo, ethPerDAI, ethPerToken, iaoContract, tokenContract, tokenInfo, tokenPerDAI;
     // init
     tokenInfo = (await getTokenInfo(symbol));
@@ -26334,7 +26334,7 @@ module.exports=[
           return iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
             from: web3.eth.defaultAccount,
             gas: Math.ceil(estimatedGas * 1.1)
-          }).on("transactionHash", txCallback);
+          }).on("transactionHash", txCallback).on('receipt', confirmCallback);
         }).catch(errCallback));
       }));
     }).catch(errCallback));

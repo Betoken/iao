@@ -161,7 +161,7 @@ getAccountPriceInTokens = (symbol, amountInDAI) ->
 #
 
 # register with DAI. amountInDAI should be in DAI (not wei).
-registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
+registerWithDAI = (amountInDAI, referrer, txCallback, errCallback, confirmCallback) ->
     # init
     amountInWei = amountInDAI * 1e18
     tokenInfo = await getTokenInfo("DAI")
@@ -197,13 +197,13 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
                     from: web3.eth.defaultAccount
                     gas: Math.ceil(estimatedGas * 1.1)
                 }
-            ).on("transactionHash", txCallback)
+            ).on("transactionHash", txCallback).on('receipt', confirmCallback)
         ).catch(errCallback)
     ).catch(errCallback)
 
 
 # register with ETH. amountInDAI should be in DAI (not wei).
-registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
+registerWithETH = (amountInDAI, referrer, txCallback, errCallback, confirmCallback) ->
     # init
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
@@ -227,12 +227,12 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
             from: web3.eth.defaultAccount
             gas: Math.ceil(estimatedGas * 1.1)
             value: amountInWei
-        }).on("transactionHash", txCallback)
+        }).on("transactionHash", txCallback).on('receipt', confirmCallback)
     ).catch(errCallback)
 
 
 # register with an ERC20 token. amountInDAI should be in DAI (not wei).
-registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
+registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, confirmCallback) ->
     # init
     tokenInfo = await getTokenInfo(symbol)
     daiInfo = await getTokenInfo("DAI")
@@ -296,7 +296,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
                             from: web3.eth.defaultAccount
                             gas: Math.ceil(estimatedGas * 1.1)
                         }
-                    ).on("transactionHash", txCallback)
+                    ).on("transactionHash", txCallback).on('receipt', confirmCallback)
                 ).catch(errCallback)
         )
     ).catch(errCallback)
