@@ -11,7 +11,7 @@ erc20ABI = require "./erc20_abi.json"
 # smart contract addresses
 provider = new HttpProvider("https://mainnet.infura.io/v3/7a7dd3472294438eab040845d03c215c")
 ens = new ENS({ provider, network: '1' })
-IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9"
+IAO_ADDRESS = "0xF6CA4bdE4f6dF4d733090476e5052F26da37D8fF"
 IAO_ENS_ADDRESS = "iao.betokenfund.eth"
 
 InsaneGas = 1e18
@@ -180,7 +180,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
 
         await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
             from: web3.eth.defaultAccount
-            gas: estimatedGas
+            gas: Math.ceil(estimatedGas * 1.1)
         })
 
         # register
@@ -195,7 +195,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
             await iaoContract.methods.registerWithDAI(
                 amountInWei, referrer).send({
                     from: web3.eth.defaultAccount
-                    gas: estimatedGas
+                    gas: Math.ceil(estimatedGas * 1.1)
                 }
             ).on("transactionHash", txCallback)
         ).catch(errCallback)
@@ -225,7 +225,7 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback) ->
 
         await iaoContract.methods.registerWithETH(referrer).send({
             from: web3.eth.defaultAccount
-            gas: estimatedGas
+            gas: Math.ceil(estimatedGas * 1.1)
             value: amountInWei
         }).on("transactionHash", txCallback)
     ).catch(errCallback)
@@ -245,10 +245,10 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
     ethPerToken = tokenInfo.currentPrice
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
-    amountInTokenUnits = amountInDAI * tokenPerDAI * 1e18
+    amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals)
 
-    # approve token amount
-    await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    # set allowance to 0
+    await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
         from: web3.eth.defaultAccount
         gas: InsaneGas
     }).then((estimatedGas) ->
@@ -256,33 +256,49 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
             errCallback()
             return
 
-        await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+        await tokenContract.methods.approve(IAO_ADDRESS, 0)
             .send({
                 from: web3.eth.defaultAccount
-                gas: estimatedGas
+                gas: Math.ceil(estimatedGas * 1.1)
             })
 
-        # register
-        await iaoContract.methods.registerWithToken(tokenInfo.contractAddress,
-            amountInTokenUnits,
-            referrer).estimateGas({
-                from: web3.eth.defaultAccount
-                gas: InsaneGas
-            }).then((estimatedGas) ->
-                if estimatedGas == InsaneGas || !(estimatedGas?)
-                    errCallback()
-                    return
+        # approve token amount
+        await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+            from: web3.eth.defaultAccount
+            gas: InsaneGas
+        }).then((estimatedGas) ->
+            if estimatedGas == InsaneGas || !(estimatedGas?)
+                errCallback()
+                return
 
-                await iaoContract.methods.registerWithToken(
-                    tokenInfo.contractAddress,
-                    amountInTokenUnits,
-                    referrer).send(
-                    {
-                        from: web3.eth.defaultAccount
-                        gas: estimatedGas
-                    }
-                ).on("transactionHash", txCallback)
-            ).catch(errCallback)
+            await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+                .send({
+                    from: web3.eth.defaultAccount
+                    gas: Math.ceil(estimatedGas * 1.1)
+                })
+
+            # register
+            await iaoContract.methods.registerWithToken(tokenInfo.contractAddress,
+                amountInTokenUnits,
+                referrer).estimateGas({
+                    from: web3.eth.defaultAccount
+                    gas: InsaneGas
+                }).then((estimatedGas) ->
+                    if estimatedGas == InsaneGas || !(estimatedGas?)
+                        errCallback()
+                        return
+
+                    await iaoContract.methods.registerWithToken(
+                        tokenInfo.contractAddress,
+                        amountInTokenUnits,
+                        referrer).send(
+                        {
+                            from: web3.eth.defaultAccount
+                            gas: Math.ceil(estimatedGas * 1.1)
+                        }
+                    ).on("transactionHash", txCallback)
+                ).catch(errCallback)
+        )
     ).catch(errCallback)
 
 

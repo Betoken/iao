@@ -26055,7 +26055,7 @@ module.exports=[
     network: '1'
   });
 
-  IAO_ADDRESS = "0x82Cc1d32C5F8A756B6e97642AABD219e2EB884d9";
+  IAO_ADDRESS = "0xF6CA4bdE4f6dF4d733090476e5052F26da37D8fF";
 
   IAO_ENS_ADDRESS = "iao.betokenfund.eth";
 
@@ -26235,7 +26235,7 @@ module.exports=[
       }
       await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
         from: web3.eth.defaultAccount,
-        gas: estimatedGas
+        gas: Math.ceil(estimatedGas * 1.1)
       });
       // register
       return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).estimateGas({
@@ -26248,7 +26248,7 @@ module.exports=[
         }
         return (await iaoContract.methods.registerWithDAI(amountInWei, referrer).send({
           from: web3.eth.defaultAccount,
-          gas: estimatedGas
+          gas: Math.ceil(estimatedGas * 1.1)
         }).on("transactionHash", txCallback));
       }).catch(errCallback));
     }).catch(errCallback));
@@ -26276,7 +26276,7 @@ module.exports=[
       }
       return (await iaoContract.methods.registerWithETH(referrer).send({
         from: web3.eth.defaultAccount,
-        gas: estimatedGas,
+        gas: Math.ceil(estimatedGas * 1.1),
         value: amountInWei
       }).on("transactionHash", txCallback));
     }).catch(errCallback));
@@ -26295,9 +26295,9 @@ module.exports=[
     ethPerToken = tokenInfo.currentPrice;
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
-    amountInTokenUnits = amountInDAI * tokenPerDAI * 1e18;
-    // approve token amount
-    return (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
+    amountInTokenUnits = amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals);
+    // set allowance to 0
+    return (await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
       from: web3.eth.defaultAccount,
       gas: InsaneGas
     }).then(async function(estimatedGas) {
@@ -26305,12 +26305,12 @@ module.exports=[
         errCallback();
         return;
       }
-      await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
+      await tokenContract.methods.approve(IAO_ADDRESS, 0).send({
         from: web3.eth.defaultAccount,
-        gas: estimatedGas
+        gas: Math.ceil(estimatedGas * 1.1)
       });
-      // register
-      return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
+      // approve token amount
+      return (await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).estimateGas({
         from: web3.eth.defaultAccount,
         gas: InsaneGas
       }).then(async function(estimatedGas) {
@@ -26318,11 +26318,25 @@ module.exports=[
           errCallback();
           return;
         }
-        return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
+        await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits).send({
           from: web3.eth.defaultAccount,
-          gas: estimatedGas
-        }).on("transactionHash", txCallback));
-      }).catch(errCallback));
+          gas: Math.ceil(estimatedGas * 1.1)
+        });
+        // register
+        return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).estimateGas({
+          from: web3.eth.defaultAccount,
+          gas: InsaneGas
+        }).then(async function(estimatedGas) {
+          if (estimatedGas === InsaneGas || !(estimatedGas != null)) {
+            errCallback();
+            return;
+          }
+          return (await iaoContract.methods.registerWithToken(tokenInfo.contractAddress, amountInTokenUnits, referrer).send({
+            from: web3.eth.defaultAccount,
+            gas: Math.ceil(estimatedGas * 1.1)
+          }).on("transactionHash", txCallback));
+        }).catch(errCallback));
+      }));
     }).catch(errCallback));
   };
 

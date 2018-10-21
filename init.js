@@ -123,10 +123,16 @@ $(document)
             }
         }
         // update tx count
-        if (symbol === 'ETH') {
-            $('.tx_count').text('1');
-        } else {
-            $('.tx_count').text('2');
+        switch (symbol) {
+            case 'ETH':
+                $('.tx_count').text('1');
+                break;
+            case 'DAI':
+                $('.tx_count').text('2');
+                break;
+            default:
+                $('.tx_count').text('3');
+                break;
         }
         // load web3
         if (e.currentTarget.id === 'metamask_btn') {
