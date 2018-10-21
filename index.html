@@ -116,7 +116,7 @@
             </div>
             
             <!--IAO user flow-->
-            <div class="column" id="flow_start" style="display: inline-block; margin-top: 1em;">
+            <div class="column" id="flow_start" style="display: inline-block; margin-top: -1.5em;">
                 <div class="ui segment">
                     <div class="ui fluid form success">
                         <div class="field">
@@ -180,11 +180,12 @@
             
             <div class="column" id="flow_metamask_confirm" style="display: none; margin-top: 1em;">
                 <div class="ui segment">
-                    <p><strong>Confirm transaction on your Metamask Wallet</strong></p>
+                    <p><strong>Awaiting confirmation from your Metamask Wallet</strong></p>
                     <p>
-                        Confirm the transaction on Metamask to continue your purchase. <br>
+                        Confirm the transaction(s) in Metamask to continue your purchase. <br>
                         There will be <b class="tx_count"></b> <b>transaction(s)</b> you need to confirm. <br>
                         It's fine to stick with these defaults gas limit and price. <br>
+                        <small style="line-height: 1.2"><i>Note: If you don't see the correct number of transactions, try opening the Metamask interface manually. Sometimes Metamask hides transactions!</i></small>
                     </p>
                     <p><img class="powered-by" src="semantic/dist/themes/default/assets/images/metamask-big.png" width="128" alt="metamask-logo"></p>
                     <div class="ui fluid form success">
@@ -198,7 +199,7 @@
             
             <div class="column" id="flow_ledger_confirm" style="display: none; margin-top: 1em;">
                 <div class="ui segment">
-                    <p><strong>Awaiting confirmation on your Ledger</strong></p>
+                    <p><strong>Awaiting confirmation from your Ledger wallet</strong></p>
                     <p>
                         Please confirm the transaction on your Ledger wallet. <br>
                         There will be <b class="tx_count"></b> <b>transaction(s)</b> you need to confirm.

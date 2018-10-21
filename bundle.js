@@ -26219,7 +26219,7 @@ module.exports=[
   registerWithDAI = async function(amountInDAI, referrer, txCallback, errCallback, confirmCallback) {
     var amountInWei, iaoContract, tokenContract, tokenInfo;
     // init
-    amountInWei = web3.utils.toBN(amountInDAI * 1e18);
+    amountInWei = web3.utils.toBN(amountInDAI).mul(1e18);
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
@@ -26266,7 +26266,7 @@ module.exports=[
     referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
-    amountInWei = web3.utils.toBN(amountInDAI * ethPerDAI * 1e18);
+    amountInWei = web3.utils.toBN(amountInDAI).mul(ethPerDAI).mul(1e18);
     // register
     return (await iaoContract.methods.registerWithETH(referrer).estimateGas({
       from: web3.eth.defaultAccount,
@@ -26299,7 +26299,7 @@ module.exports=[
     ethPerToken = tokenInfo.currentPrice;
     ethPerDAI = daiInfo.currentPrice;
     tokenPerDAI = ethPerDAI / ethPerToken;
-    amountInTokenUnits = web3.utils.toBN(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals));
+    amountInTokenUnits = web3.utils.toBN(amountInDAI).mul(tokenPerDAI).mul(web3.utils.toBN(10).pow(tokenInfo.decimals));
     // set allowance to 0
     return (await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
       from: web3.eth.defaultAccount,
