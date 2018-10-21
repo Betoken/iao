@@ -84,6 +84,7 @@ $(document)
 
     $('.continue').on('click', (e) => {
         var symbol = $('#dropdown')[0].value;
+        var hasSubmitted = false;
         var register = () => {
             var amountInDAI = window.payAmountInDAI;
             var referrer = getUrlParameter('ref');
@@ -107,10 +108,13 @@ $(document)
                 $.getScript("http://platform.twitter.com/widgets.js");
 
                 setFlowStep('flow_submitted');
+                hasSubmitted = true;
             };
             var errCallback = (err) => {
                 console.log(err);
-                showError(TX_ERR);
+                if (!hasSubmitted) {
+                    showError(TX_ERR);
+                }
             };
 
             switch (symbol) {
