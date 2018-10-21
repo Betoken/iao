@@ -164,7 +164,7 @@ getAccountPriceInTokens = (symbol, amountInDAI) ->
 # register with DAI. amountInDAI should be in DAI (not wei).
 registerWithDAI = (amountInDAI, referrer, txCallback, errCallback, confirmCallback) ->
     # init
-    amountInWei = Math.floor(amountInDAI * 1e18)
+    amountInWei = BigNumber(Math.floor(amountInDAI * 1e18))
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
@@ -214,7 +214,7 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback, confirmCallba
 
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
-    amountInWei = Math.floor(amountInDAI * ethPerDAI * 1e18)
+    amountInWei = BigNumber(Math.floor(amountInDAI * ethPerDAI * 1e18))
 
     # register
     await iaoContract.methods.registerWithETH(referrer).estimateGas({

@@ -26221,7 +26221,7 @@ module.exports=[
   registerWithDAI = async function(amountInDAI, referrer, txCallback, errCallback, confirmCallback) {
     var amountInWei, iaoContract, tokenContract, tokenInfo;
     // init
-    amountInWei = Math.floor(amountInDAI * 1e18);
+    amountInWei = BigNumber(Math.floor(amountInDAI * 1e18));
     tokenInfo = (await getTokenInfo("DAI"));
     iaoContract = (await IAOContract());
     tokenContract = (await ERC20Contract(tokenInfo.contractAddress));
@@ -26268,7 +26268,7 @@ module.exports=[
     referrer = web3.utils.isAddress(referrer) ? referrer : "0x0000000000000000000000000000000000000000";
     // calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice;
-    amountInWei = Math.floor(amountInDAI * ethPerDAI * 1e18);
+    amountInWei = BigNumber(Math.floor(amountInDAI * ethPerDAI * 1e18));
     // register
     return (await iaoContract.methods.registerWithETH(referrer).estimateGas({
       from: web3.eth.defaultAccount,
