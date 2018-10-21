@@ -163,7 +163,7 @@ getAccountPriceInTokens = (symbol, amountInDAI) ->
 # register with DAI. amountInDAI should be in DAI (not wei).
 registerWithDAI = (amountInDAI, referrer, txCallback, errCallback, confirmCallback) ->
     # init
-    amountInWei = web3.utils.toBN(amountInDAI).mul(1e18)
+    amountInWei = Math.floor(amountInDAI * 1e18)
     tokenInfo = await getTokenInfo("DAI")
     iaoContract = await IAOContract()
     tokenContract = await ERC20Contract(tokenInfo.contractAddress)
@@ -213,7 +213,7 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback, confirmCallba
 
     # calculate ETH amount
     ethPerDAI = tokenInfo.currentPrice
-    amountInWei = web3.utils.toBN(amountInDAI).mul(ethPerDAI).mul(1e18)
+    amountInWei = Math.floor(amountInDAI * ethPerDAI * 1e18)
 
     # register
     await iaoContract.methods.registerWithETH(referrer).estimateGas({
@@ -248,8 +248,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, con
     ethPerToken = tokenInfo.currentPrice
     ethPerDAI = daiInfo.currentPrice
     tokenPerDAI = ethPerDAI / ethPerToken
-    amountInTokenUnits = web3.utils.toBN(amountInDAI)
-        .mul(tokenPerDAI).mul(web3.utils.toBN(10).pow(tokenInfo.decimals))
+    amountInTokenUnits = Math.floor(amountInDAI * tokenPerDAI * Math.pow(10, tokenInfo.decimals))
 
     # set allowance to 0
     await tokenContract.methods.approve(IAO_ADDRESS, 0).estimateGas({
