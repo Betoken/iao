@@ -158,11 +158,15 @@ $(document)
 
     // load token dropdown
     var dropdown = $('#dropdown');
+    var unsupportedTokens = ['OMG', 'MTL', 'ADX', 'PAY', 'DAT'];
     window.getTokenList().then(
         (tokens) => {
             $.each(tokens, (i) => {
                 info = tokens[i];
-                dropdown.append($("<option />").val(info.symbol).text(`${info.name} (${info.symbol})`));
+                if (!unsupportedTokens.includes(info.symbol)) {
+                    // filter out unsupported tokens
+                    dropdown.append($("<option />").val(info.symbol).text(`${info.name} (${info.symbol})`));
+                }
             });
         }
     );
