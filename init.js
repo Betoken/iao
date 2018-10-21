@@ -105,7 +105,7 @@ $(document)
                 // copy cloned button into div that we can clear later
                 $('#share_twitter').append(clone);
                 // reload twitter scripts to force them to run, converting a to iframe
-                $.getScript("http://platform.twitter.com/widgets.js");
+                $.getScript("https://platform.twitter.com/widgets.js");
 
                 setFlowStep('flow_submitted');
                 hasSubmitted = true;

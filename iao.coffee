@@ -178,7 +178,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
             errCallback()
             return
 
-        await tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
+        tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
             from: web3.eth.defaultAccount
             gas: Math.ceil(estimatedGas * 1.1)
         })
@@ -192,7 +192,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback) ->
                 errCallback()
                 return
 
-            await iaoContract.methods.registerWithDAI(
+            iaoContract.methods.registerWithDAI(
                 amountInWei, referrer).send({
                     from: web3.eth.defaultAccount
                     gas: Math.ceil(estimatedGas * 1.1)
@@ -256,7 +256,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
             errCallback()
             return
 
-        await tokenContract.methods.approve(IAO_ADDRESS, 0)
+        tokenContract.methods.approve(IAO_ADDRESS, 0)
             .send({
                 from: web3.eth.defaultAccount
                 gas: Math.ceil(estimatedGas * 1.1)
@@ -271,7 +271,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
                 errCallback()
                 return
 
-            await tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
+            tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
                 .send({
                     from: web3.eth.defaultAccount
                     gas: Math.ceil(estimatedGas * 1.1)
@@ -288,7 +288,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback) ->
                         errCallback()
                         return
 
-                    await iaoContract.methods.registerWithToken(
+                    iaoContract.methods.registerWithToken(
                         tokenInfo.contractAddress,
                         amountInTokenUnits,
                         referrer).send(
