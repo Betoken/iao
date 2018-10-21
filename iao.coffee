@@ -180,7 +180,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback, confirmCallba
 
         tokenContract.methods.approve(IAO_ADDRESS, amountInWei).send({
             from: web3.eth.defaultAccount
-            gas: Math.ceil(estimatedGas * 1.1)
+            gas: Math.ceil(estimatedGas * 1.5)
             gasPrice: "#{1e10}"
         }).on("transactionHash", () ->
             # register
@@ -195,7 +195,7 @@ registerWithDAI = (amountInDAI, referrer, txCallback, errCallback, confirmCallba
                 iaoContract.methods.registerWithDAI(
                     amountInWei, referrer).send({
                         from: web3.eth.defaultAccount
-                        gas: Math.ceil(estimatedGas * 1.1)
+                        gas: Math.ceil(estimatedGas * 1.5)
                         gasPrice: "#{1e10}"
                     }
                 ).on("transactionHash", txCallback).on('receipt', confirmCallback)
@@ -227,7 +227,7 @@ registerWithETH = (amountInDAI, referrer, txCallback, errCallback, confirmCallba
 
         await iaoContract.methods.registerWithETH(referrer).send({
             from: web3.eth.defaultAccount
-            gas: Math.ceil(estimatedGas * 1.1)
+            gas: Math.ceil(estimatedGas * 1.5)
             value: amountInWei
             gasPrice: "#{1e10}"
         }).on("transactionHash", txCallback).on('receipt', confirmCallback)
@@ -262,7 +262,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, con
         tokenContract.methods.approve(IAO_ADDRESS, 0)
         .send({
             from: web3.eth.defaultAccount
-            gas: Math.ceil(estimatedGas * 1.1)
+            gas: Math.ceil(estimatedGas * 1.5)
             gasPrice: "#{1e10}"
         }).on("transactionHash", () ->
             # approve token amount
@@ -277,7 +277,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, con
                 tokenContract.methods.approve(IAO_ADDRESS, amountInTokenUnits)
                 .send({
                     from: web3.eth.defaultAccount
-                    gas: Math.ceil(estimatedGas * 1.1)
+                    gas: Math.ceil(estimatedGas * 1.5)
                     gasPrice: "#{1e10}"
                 }).on("transactionHash", () ->
                     # register
@@ -287,7 +287,7 @@ registerWithToken = (symbol, amountInDAI, referrer, txCallback, errCallback, con
                         referrer).send(
                         {
                             from: web3.eth.defaultAccount
-                            gas: 1100000
+                            gas: 1500000
                             gasPrice: "#{1e10}"
                         }
                     ).on("transactionHash", txCallback).on('receipt', confirmCallback)
