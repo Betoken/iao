@@ -16,6 +16,7 @@ var getUrlParameter = function getUrlParameter(sParam) {
 NO_WEB3_ERR = "You need a Web3-enabled browser, like Metamask, Brave, Status, and Cipher, in order to use \"Continue with Metamask\". Don't forget, you can always transfer Ether directly to iao.betokenfund.eth to participate in the IAO!";
 LEDGER_ERR = "We're having trouble connecting to your Ledger Wallet. Please make sure:\n• You are using Chrome or Brave on a desktop computer.\n• Your Ledger is properly plugged in.\n• You have logged into your Ledger.\n• You have launched the Ethereum App on your Ledger.\n• \"Browser Support\" has been enabled in the Ethereum App's settings.\n"
 TX_ERR = "It would seem that one of the following has happened:\n• You have already participated in the IAO\n• You have insufficient funds\n• You have rejected the transaction\n• Something unexpected has happened\nPlease reject all transactions you see right now."
+WRONG_NETWORK_ERR = "Please switch to the Ethereum Main network in order to participate in the IAO."
 
 $(document)
 .ready(() => {
@@ -132,11 +133,17 @@ $(document)
         if (e.currentTarget.id === 'metamask_btn') {
             window.loadWeb3(false).then((success) => {
                 if (success) {
-                    // transition to confirm page
-                    setFlowStep('flow_metamask_confirm');
+                    web3.eth.net.getId().then((netID) => {
+                        if (netID === 1) {
+                            // transition to confirm page
+                            setFlowStep('flow_metamask_confirm');
 
-                    // register
-                    register();
+                            // register
+                            register();
+                        } else {
+                            showError(WRONG_NETWORK_ERR);
+                        }
+                    })
                 } else {
                     showError(NO_WEB3_ERR);
                 }

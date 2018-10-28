@@ -1,7 +1,6 @@
 {
     "dependencies": {
         "bignumber.js": "^7.2.1",
-        "ethers": "^4.0.7",
         "ethjs-ens": "^2.0.1",
         "ethjs-provider-http": "^0.1.6",
         "ledger-wallet-provider": "^2.0.1-beta.3",
